@@ -3,7 +3,7 @@ site_url: https://vttresearch.github.io/CWatM-spinetoolbox/
 site_description: Project documentation for CWatM implementation in SpineToolbox
 site_author: VTT DOES Team
 
-repo_name: jeanlouisnico/CWatM-spinetoolbox
+repo_name: vttresearch/CWatM-spinetoolbox
 repo_url: https://github.com/jeanlouisnico/CWatM-spinetoolbox
 edit_uri: blob/master/docs/
 
