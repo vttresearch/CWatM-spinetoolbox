@@ -1,7 +1,7 @@
 site_name: FlexTool - CWatM
 site_url: https://vttresearch.github.io/CWatM-spinetoolbox/
 site_description: Project documentation for CWatM implementation in SpineToolbox
-site_author: VTT DOES Team
+site_author: VTT Team
 
 repo_name: vttresearch/CWatM-spinetoolbox
 repo_url: https://github.com/vttresearch/CWatM-spinetoolbox
