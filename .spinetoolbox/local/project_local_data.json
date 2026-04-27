@@ -1,4 +1,234 @@
 {
+    "project": {
+        "settings": {
+            "mode": "author"
+        },
+        "connections": {
+            "convert_to_valid_toml": {
+                "parse_toml": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "parse_toml": {
+                "cwatm_db": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "calibration init (1)": {
+                "convert_to_valid_toml (2)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "convert_to_valid_toml (2)": {
+                "parse_toml (2)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "parse_toml (2)": {
+                "cwatm_db": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "cwatm_db": {
+                "export_to_ini_calib": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@cwatm_db": {
+                                "scenario_filter": {
+                                    "calibration": true,
+                                    "cwatm_template_30arcmin": true
+                                },
+                                "alternative_filter": {
+                                    "Base": true,
+                                    "calibration_ini": true,
+                                    "calibration_run": true,
+                                    "output_cwatm": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "export_to_ini_calibtxt": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@cwatm_db": {
+                                "scenario_filter": {
+                                    "calibration": true,
+                                    "cwatm_template_30arcmin": false
+                                },
+                                "alternative_filter": {
+                                    "Base": false,
+                                    "calibration_ini": true,
+                                    "calibration_run": false,
+                                    "output_cwatm": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "export_to_ini_cwatm": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@cwatm_db": {
+                                "scenario_filter": {
+                                    "calibration": false,
+                                    "cwatm_template_30arcmin": true
+                                },
+                                "alternative_filter": {
+                                    "Base": true,
+                                    "calibration_ini": true,
+                                    "calibration_run": true,
+                                    "output_cwatm": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "export_to_ini_calib_Cwatm_stdalone": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@cwatm_db": {
+                                "scenario_filter": {
+                                    "calibration": false,
+                                    "cwatm_template_30arcmin": true
+                                },
+                                "alternative_filter": {
+                                    "Base": true,
+                                    "calibration_ini": true,
+                                    "calibration_run": true,
+                                    "output_cwatm": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "export_to_ini_calib": {
+                "Calibration (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Data Store": {
+                "update_clean_db": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@Data Store": {
+                                "scenario_filter": {
+                                    "calibration": true,
+                                    "cwatm_template_30arcmin": true
+                                },
+                                "alternative_filter": {
+                                    "Base": true,
+                                    "calibration_ini": true,
+                                    "calibration_run": true,
+                                    "output_cwatm": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "update_clean_db": {
+                "parse_toml (2)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "parse_toml": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "export_to_ini_calibtxt": {
+                "Calibration (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Calibration (1)": {
+                "convert_to_valid_toml (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "convert_to_valid_toml (1)": {
+                "parse_toml (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "parse_toml (1)": {
+                "best_calib": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "CWatM ini file": {
+                "convert_to_valid_toml": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "export_to_ini_cwatm": {
+                "loop_next_day": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "cwatm": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "export_to_ini_calib_Cwatm_stdalone": {
+                "CWatM_standalone": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "cwatm": {
+                "process_to_flexTool": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "loop_next_day": {
+                "data_store_loop": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "process_to_flexTool": {
+                "loop_next_day": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            }
+        }
+    },
     "items": {
         "cwatm_db": {
             "url": {

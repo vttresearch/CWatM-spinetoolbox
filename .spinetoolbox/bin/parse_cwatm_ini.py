@@ -10,9 +10,10 @@ import sys
 
 
 settingsFNTOML = "validTOML_settings_CWatM.ini"
-sql_url = sys.argv[1] 
-alternative = sys.argv[2]
-typefile = sys.argv[3]
+sql_url = sys.argv[1] # Get the url of the database
+alternative = sys.argv[2] # Allocate the imported file to be imported into a seperate alternative. Provide the name of this new alternative.
+typefile = sys.argv[3] # What type of file is this. this is set to "initfile" or "calibration"
+importfile = sys.argv[4] # Set this variable if you want to import the file or not. This should be always true, unless you run the entire workflow at once and should be set to false
 with open(settingsFNTOML, 'r') as f:
     config = toml.load(f)
 class X(object):
@@ -92,10 +93,10 @@ def populate_ini(sql_url, config, alternative):
                 #print(value_in_db)
                 #print(value)
                 if value_in_db == api.from_database(value,type_):
-                    print("same value, skipping")
+                    print(f"{key2}: same value, skipping")
                     continue
                 else:
-                    print(f"not the same value value_in_db={value_in_db} and value_ini={value}")
+                    print(f"{key2}: not the same value value_in_db={value_in_db} and value_ini={value}")
 
                 
                 if key=="CALIBRATION" and typefile=="calibration":
@@ -143,7 +144,7 @@ with DatabaseMapping(sql_url) as db_map:
     #print(scenario)
     #print(entity_classes)
     if len(sys.argv) == 5:
-        update = sys.argv[4].lower() in ['true', '1']
+        update = importfile.lower() in ['true', '1']
     else:
         if not entity_classes and not scenario:
             update = True

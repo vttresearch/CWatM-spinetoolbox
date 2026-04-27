@@ -3,13 +3,8 @@
         "Validator": {
             "execution_settings": {}
         },
-        "export_to_init": {
-            "execution_settings": {
-                "kernel_spec_name": "",
-                "env": "",
-                "use_jupyter_console": false,
-                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
-            }
+        "Atlite time series import": {
+            "execution_settings": {}
         },
         "Interpolate missing values": {
             "execution_settings": {}
@@ -23,6 +18,9 @@
         "Load template": {
             "execution_settings": {}
         },
+        "Upgrade database": {
+            "execution_settings": {}
+        },
         "Run SpineOpt detached": {
             "execution_settings": {}
         },
@@ -32,6 +30,14 @@
                 "env": "",
                 "use_jupyter_console": false,
                 "executable": ""
+            }
+        },
+        "CWatM": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
             }
         },
         "import_ini_cwatm": {
@@ -106,12 +112,6 @@
                 "executable": ""
             }
         },
-        "test": {
-            "execution_settings": {
-                "cmd": "",
-                "shell": ""
-            }
-        },
         "process_to_flexTool": {
             "execution_settings": {
                 "env": "conda",
@@ -128,26 +128,10 @@
                 "executable": ""
             }
         },
-        "loop_test": {
-            "execution_settings": {
-                "env": "conda",
-                "kernel_spec_name": "conda-env-flex_cwatm-py",
-                "use_jupyter_console": false,
-                "executable": ""
-            }
-        },
         "Loop_end_conditions": {
             "execution_settings": {
                 "env": "conda",
                 "kernel_spec_name": "conda-env-flex_cwatm-py",
-                "use_jupyter_console": false,
-                "executable": ""
-            }
-        },
-        "CWatM": {
-            "execution_settings": {
-                "kernel_spec_name": "",
-                "env": "",
                 "use_jupyter_console": false,
                 "executable": ""
             }

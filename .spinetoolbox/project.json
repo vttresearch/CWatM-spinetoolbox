@@ -3,7 +3,8 @@
         "version": 13,
         "description": "This spinetoolbox is built to run CWatM hydrological model and organise the data and input files. One needs to install CWatM seperately prior to using this project",
         "settings": {
-            "enable_execute_all": true
+            "enable_execute_all": true,
+            "store_external_paths_as_relative": false
         },
         "specifications": {
             "Tool": [
@@ -65,11 +66,6 @@
                 {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/specifications/Tool/test.json"
-                },
-                {
-                    "type": "path",
-                    "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/process_to_flextool.json"
                 },
                 {
@@ -81,11 +77,6 @@
                     "type": "path",
                     "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/loop_end_conditions.json"
-                },
-                {
-                    "type": "path",
-                    "relative": true,
-                    "path": ".spinetoolbox/specifications/Tool/loop_test.json"
                 }
             ]
         },
@@ -101,7 +92,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -123,7 +113,6 @@
                     "write_index": 2
                 },
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -142,7 +131,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -161,7 +149,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -183,7 +170,6 @@
                     "purge_before_writing": false
                 },
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -205,48 +191,6 @@
                     "require_scenario_filter": false
                 },
                 "filter_settings": {
-                    "known_filters": {
-                        "db_url@cwatm_db": {
-                            "scenario_filter": {
-                                "Ex10_Lakes": false,
-                                "Ex10_Res": false,
-                                "Ex2_Bhima": false,
-                                "Ex2_Rhine": false,
-                                "Ex5_Bhima": false,
-                                "Ex5_Danube": false,
-                                "Matin": false,
-                                "calibration": true,
-                                "coupling": false,
-                                "cwatm": false,
-                                "cwatm_best_calib": false,
-                                "exercise3": false,
-                                "high_snow_scenario": false
-                            },
-                            "alternative_filter": {
-                                "10_Lakes-Reservoirs_Lakes": true,
-                                "10_Lakes-Reservoirs_reservoires": true,
-                                "11_1km_buhma": true,
-                                "12_5min_modflow": true,
-                                "2_Choose_Basin_Bhima": true,
-                                "2_Choose_Basin_Rhine": true,
-                                "5_Increasing-resolution_Bhima": true,
-                                "5_Increasing-resolution_Danube": true,
-                                "6_Watercycle": true,
-                                "Base": true,
-                                "Manning": true,
-                                "TU-Nexus_base": true,
-                                "TU-Nexus_best_Matin": true,
-                                "calibration_ini": true,
-                                "calibrationfile": true,
-                                "calibrationxx": true,
-                                "coupling": true,
-                                "cwatm_best": true,
-                                "cwatm_best_test": true,
-                                "high_snow": true,
-                                "output_cwatm": true
-                            }
-                        }
-                    },
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -265,7 +209,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -284,48 +227,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {
-                        "db_url@Data Store": {
-                            "scenario_filter": {
-                                "Ex10_Lakes": true,
-                                "Ex10_Res": true,
-                                "Ex2_Bhima": true,
-                                "Ex2_Rhine": true,
-                                "Ex5_Bhima": true,
-                                "Ex5_Danube": true,
-                                "Matin": true,
-                                "calibration": true,
-                                "coupling": true,
-                                "cwatm": true,
-                                "cwatm_best_calib": true,
-                                "exercise3": true,
-                                "high_snow_scenario": true
-                            },
-                            "alternative_filter": {
-                                "10_Lakes-Reservoirs_Lakes": true,
-                                "10_Lakes-Reservoirs_reservoires": true,
-                                "11_1km_buhma": true,
-                                "12_5min_modflow": true,
-                                "2_Choose_Basin_Bhima": true,
-                                "2_Choose_Basin_Rhine": true,
-                                "5_Increasing-resolution_Bhima": true,
-                                "5_Increasing-resolution_Danube": true,
-                                "6_Watercycle": true,
-                                "Base": true,
-                                "Manning": true,
-                                "TU-Nexus_base": true,
-                                "TU-Nexus_best_Matin": true,
-                                "calibration_ini": true,
-                                "calibrationfile": true,
-                                "calibrationxx": true,
-                                "coupling": true,
-                                "cwatm_best": true,
-                                "cwatm_best_test": true,
-                                "high_snow": true,
-                                "output_cwatm": true
-                            }
-                        }
-                    },
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -344,7 +245,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -363,7 +263,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -382,48 +281,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {
-                        "db_url@cwatm_db": {
-                            "scenario_filter": {
-                                "Ex10_Lakes": true,
-                                "Ex10_Res": true,
-                                "Ex2_Bhima": true,
-                                "Ex2_Rhine": true,
-                                "Ex5_Bhima": true,
-                                "Ex5_Danube": true,
-                                "Matin": true,
-                                "calibration": true,
-                                "coupling": true,
-                                "cwatm": true,
-                                "cwatm_best_calib": true,
-                                "exercise3": true,
-                                "high_snow_scenario": true
-                            },
-                            "alternative_filter": {
-                                "10_Lakes-Reservoirs_Lakes": false,
-                                "10_Lakes-Reservoirs_reservoires": false,
-                                "11_1km_buhma": false,
-                                "12_5min_modflow": false,
-                                "2_Choose_Basin_Bhima": false,
-                                "2_Choose_Basin_Rhine": false,
-                                "5_Increasing-resolution_Bhima": false,
-                                "5_Increasing-resolution_Danube": false,
-                                "6_Watercycle": false,
-                                "Base": false,
-                                "Manning": false,
-                                "TU-Nexus_base": false,
-                                "TU-Nexus_best_Matin": false,
-                                "calibration_ini": true,
-                                "calibrationfile": false,
-                                "calibrationxx": false,
-                                "coupling": false,
-                                "cwatm_best": false,
-                                "cwatm_best_test": false,
-                                "high_snow": false,
-                                "output_cwatm": false
-                            }
-                        }
-                    },
                     "auto_online": false,
                     "enabled_filter_types": {
                         "alternative_filter": true,
@@ -442,7 +299,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -461,48 +317,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {
-                        "db_url@cwatm_db": {
-                            "scenario_filter": {
-                                "Ex10_Lakes": false,
-                                "Ex10_Res": false,
-                                "Ex2_Bhima": false,
-                                "Ex2_Rhine": false,
-                                "Ex5_Bhima": false,
-                                "Ex5_Danube": false,
-                                "Matin": true,
-                                "calibration": false,
-                                "coupling": false,
-                                "cwatm": false,
-                                "cwatm_best_calib": false,
-                                "exercise3": false,
-                                "high_snow_scenario": false
-                            },
-                            "alternative_filter": {
-                                "10_Lakes-Reservoirs_Lakes": true,
-                                "10_Lakes-Reservoirs_reservoires": true,
-                                "11_1km_buhma": true,
-                                "12_5min_modflow": true,
-                                "2_Choose_Basin_Bhima": true,
-                                "2_Choose_Basin_Rhine": true,
-                                "5_Increasing-resolution_Bhima": true,
-                                "5_Increasing-resolution_Danube": true,
-                                "6_Watercycle": true,
-                                "Base": true,
-                                "Manning": true,
-                                "TU-Nexus_base": true,
-                                "TU-Nexus_best_Matin": true,
-                                "calibration_ini": true,
-                                "calibrationfile": true,
-                                "calibrationxx": true,
-                                "coupling": true,
-                                "cwatm_best": true,
-                                "cwatm_best_test": true,
-                                "high_snow": true,
-                                "output_cwatm": true
-                            }
-                        }
-                    },
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -521,7 +335,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -540,7 +353,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -562,7 +374,6 @@
                     "write_index": 1
                 },
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -581,7 +392,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -600,7 +410,6 @@
                     "right"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -619,48 +428,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {
-                        "db_url@cwatm_db": {
-                            "scenario_filter": {
-                                "Ex10_Lakes": false,
-                                "Ex10_Res": false,
-                                "Ex2_Bhima": false,
-                                "Ex2_Rhine": false,
-                                "Ex5_Bhima": false,
-                                "Ex5_Danube": false,
-                                "Matin": true,
-                                "calibration": false,
-                                "coupling": false,
-                                "cwatm": false,
-                                "cwatm_best_calib": false,
-                                "exercise3": false,
-                                "high_snow_scenario": false
-                            },
-                            "alternative_filter": {
-                                "10_Lakes-Reservoirs_Lakes": true,
-                                "10_Lakes-Reservoirs_reservoires": true,
-                                "11_1km_buhma": true,
-                                "12_5min_modflow": true,
-                                "2_Choose_Basin_Bhima": true,
-                                "2_Choose_Basin_Rhine": true,
-                                "5_Increasing-resolution_Bhima": true,
-                                "5_Increasing-resolution_Danube": true,
-                                "6_Watercycle": true,
-                                "Base": true,
-                                "Manning": true,
-                                "TU-Nexus_base": true,
-                                "TU-Nexus_best_Matin": true,
-                                "calibration_ini": true,
-                                "calibrationfile": true,
-                                "calibrationxx": true,
-                                "coupling": true,
-                                "cwatm_best": true,
-                                "cwatm_best_test": true,
-                                "high_snow": true,
-                                "output_cwatm": true
-                            }
-                        }
-                    },
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -679,7 +446,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -698,7 +464,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -717,7 +482,6 @@
                     "bottom"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -736,7 +500,6 @@
                     "left"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -755,7 +518,6 @@
                     "right"
                 ],
                 "filter_settings": {
-                    "known_filters": {},
                     "auto_online": true,
                     "enabled_filter_types": {
                         "alternative_filter": false,
@@ -793,16 +555,16 @@
         "cwatm_db": {
             "type": "Data Store",
             "description": "",
-            "x": 66.8604183245078,
-            "y": -197.53328164214543,
+            "x": 66.16630280295338,
+            "y": -198.6272418918036,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
-                "port": "",
+                "port": null,
                 "database": {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/items/data_store/cwatmdb_new.sqlite"
+                    "path": ".spinetoolbox/Data/cwatm_db_default.sqlite"
                 },
                 "schema": ""
             }
@@ -835,11 +597,11 @@
             "url": {
                 "dialect": "sqlite",
                 "host": "",
-                "port": "",
+                "port": null,
                 "database": {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/items/data_store/cwatmdb_new.sqlite"
+                    "path": ".spinetoolbox/Data/cwatm_db_default.sqlite"
                 },
                 "schema": ""
             }
@@ -854,7 +616,7 @@
             "cmd_line_args": [
                 {
                     "type": "resource",
-                    "arg": "C:\\Users\\JLJEAN\\Downloads\\settings_CWatM_template-Run07_best.ini"
+                    "arg": "<project>/CWatM/pytest/settings/1min/Morava/settings_morava_1min.ini"
                 }
             ],
             "kill_completed_processes": false,
@@ -874,7 +636,7 @@
                 },
                 {
                     "type": "literal",
-                    "arg": "TU-Nexus_best_Matin"
+                    "arg": "glaciers"
                 },
                 {
                     "type": "literal",
@@ -900,6 +662,8 @@
                     "path": "calibration/settings_calibration_SpineToolBox.txt"
                 }
             ],
+            "file_patterns": [],
+            "directory_references": [],
             "db_references": []
         },
         "parse_toml (2)": {
@@ -1038,7 +802,7 @@
             "url": {
                 "dialect": "sqlite",
                 "host": "",
-                "port": "",
+                "port": null,
                 "database": {
                     "type": "path",
                     "relative": true,
@@ -1094,8 +858,8 @@
         "process_to_flexTool": {
             "type": "Tool",
             "description": "",
-            "x": 597.8304579062417,
-            "y": 30.370559360072917,
+            "x": 597.8304579062418,
+            "y": 29.45400564714654,
             "specification": "process_to_flexTool",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1115,7 +879,7 @@
             "url": {
                 "dialect": "sqlite",
                 "host": "",
-                "port": "",
+                "port": null,
                 "database": {
                     "type": "path",
                     "relative": true,
@@ -1132,16 +896,18 @@
             "file_references": [
                 {
                     "type": "path",
-                    "relative": false,
-                    "path": "C:/Users/JLJEAN/Downloads/settings_CWatM_template-Run07_best.ini"
+                    "relative": true,
+                    "path": "CWatM/pytest/settings/1min/Morava/settings_morava_1min.ini"
                 }
             ],
+            "file_patterns": [],
+            "directory_references": [],
             "db_references": []
         },
         "export_to_ini_cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 232.3844701273356,
+            "x": 231.46791641440922,
             "y": 28.04125641835673,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
