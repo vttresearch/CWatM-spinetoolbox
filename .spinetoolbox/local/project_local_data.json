@@ -46,12 +46,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "cwatm_template_1minute_morava": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "glaciers": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -64,12 +66,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "cwatm_template_1minute_morava": false,
                                     "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": false,
                                     "calibration_ini": true,
                                     "calibration_run": false,
+                                    "glaciers": false,
                                     "output_cwatm": false
                                 }
                             }
@@ -82,12 +86,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
+                                    "cwatm_template_1minute_morava": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "glaciers": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -100,12 +106,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
+                                    "cwatm_template_1minute_morava": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "glaciers": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -127,12 +135,14 @@
                             "db_url@Data Store": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "cwatm_template_1minute_morava": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "glaciers": true,
                                     "output_cwatm": true
                                 }
                             }
