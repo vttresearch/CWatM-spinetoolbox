@@ -1,1 +1,4 @@
+# Needed for toolbox
 spinedb_api
+# Needed for CWatM
+gdal
