@@ -4,7 +4,7 @@
 
 A series of modifications are needed in order to operate CWatM in a loop with any other models. In this implementation, the models are run in sequence with a given time window.
 
-New variables are introduced in the ini file used by CWatM and are readily available in the toolbox workflow [*basic_model.json*](../.spinetoolbox/Data/basic_model.json) file. If you import an existing init file, you may create these variables manually from the spinedatabase.
+New variables are introduced in the ini file used by CWatM and are readily available in the toolbox workflow [*basic_model.json*]([https://github.com/vttresearch/CWatM-spinetoolbox/blob/main/.spinetoolbox/Data/basic_model.json]) file. If you import an existing init file, you may create these variables manually from the spinedatabase.
 
 | entity name            | Parameter name | Role                                                         |
 | ---------------------- | -------------- | ------------------------------------------------------------ |
