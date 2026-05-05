@@ -18,9 +18,13 @@ Examples:
 
     # With variable selection and plot
     python extract_nc_timeseries.py data.nc --lat 60.17 --lon 24.94 --year 2010 --var temperature --plot
+
+    # Save to CSV
+    python extract_nc_timeseries.py data.nc --lat 60.17 --lon 24.94 --start 2005-06-01 --end 2010-12-31 --csv output.csv
 """
 
 import argparse
+import csv
 import sys
 from datetime import datetime
 import numpy as np
@@ -37,7 +41,7 @@ def find_nearest(array, value):
 
 
 def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=None,
-                       variable=None, plot=False):
+                       variable=None, plot=False, csv_file=None):
     """
     Extract a time series for a given lat/lon point.
 
@@ -51,6 +55,7 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
     date_end    : str   – end date string   'YYYY-MM-DD' (use with date_start)
     variable    : str   – variable name (auto-detected if None)
     plot        : bool  – show a quick matplotlib plot
+    csv_file    : str   – path to save results as CSV (optional)
     """
     # Validate mode
     if year is not None and (date_start is not None or date_end is not None):
@@ -86,7 +91,7 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
 
     da = ds[variable]
     print(f"\nExtracting variable : '{variable}'")
-    print(f"Dimensions          : {dict(da.dims)}")
+    print(f"Dimensions          : {da.dims}")
 
     # ------------------------------------------------------------------ #
     # 3. Detect coordinate names (flexible naming)                        #
@@ -209,7 +214,31 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
     print(f"  Std    : {float(np.nanstd(values)):.4f} {units}")
 
     # ------------------------------------------------------------------ #
-    # 8. Optional plot                                                    #
+    # 8. Optional CSV export                                              #
+    # ------------------------------------------------------------------ #
+    if csv_file:
+        with open(csv_file, "w", newline="", encoding="utf-8") as fh:
+            writer = csv.writer(fh)
+            # Header with metadata
+            writer.writerow([f"# variable: {long_name}"])
+            writer.writerow([f"# units: {units}"])
+            writer.writerow([f"# lat (requested): {lat}",  f"lat (actual): {actual_lat:.6f}"])
+            writer.writerow([f"# lon (requested): {lon}",  f"lon (actual): {actual_lon:.6f}"])
+            if year is not None:
+                writer.writerow([f"# period: {year}"])
+            else:
+                writer.writerow([f"# period: {date_start} to {date_end}"])
+            # Column headers
+            writer.writerow(["timestamp", f"{variable} [{units}]"])
+            # Data rows
+            for t, v in zip(times, values):
+                writer.writerow([str(t)[:19], f"{v:.6f}"])
+        print(f"\n── CSV saved ─────────────────────────────────────────────")
+        print(f"  File  : {csv_file}")
+        print(f"  Rows  : {len(values)}")
+
+    # ------------------------------------------------------------------ #
+    # 9. Optional plot                                                    #
     # ------------------------------------------------------------------ #
     if plot:
         try:
@@ -264,6 +293,8 @@ Examples:
 
     parser.add_argument("--var",  type=str, default=None,
                         help="Variable name (auto-detected if omitted)")
+    parser.add_argument("--csv",  type=str, default=None, metavar="FILE.csv",
+                        help="Save results to a CSV file (e.g. output.csv)")
     parser.add_argument("--plot", action="store_true",
                         help="Show a matplotlib time-series plot")
 
@@ -276,6 +307,7 @@ Examples:
         date_start=args.start,
         date_end=args.end,
         variable=args.var,
+        csv_file=args.csv,
         plot=args.plot,
     )
 

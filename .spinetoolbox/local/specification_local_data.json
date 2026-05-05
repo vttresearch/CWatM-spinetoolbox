@@ -32,14 +32,6 @@
                 "executable": ""
             }
         },
-        "CWatM": {
-            "execution_settings": {
-                "kernel_spec_name": "",
-                "env": "",
-                "use_jupyter_console": false,
-                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
-            }
-        },
         "import_ini_cwatm": {
             "execution_settings": {
                 "kernel_spec_name": "",
@@ -134,6 +126,22 @@
                 "kernel_spec_name": "conda-env-flex_cwatm-py",
                 "use_jupyter_console": false,
                 "executable": ""
+            }
+        },
+        "CWatM": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
+            }
+        },
+        "export_nc_data": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
             }
         }
     }
