@@ -1,5 +1,8 @@
 import os
 import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "CWatM"))
+
 import subprocess
 from cwatm.management_modules.globals import *
 from cwatm.management_modules.messages import *
