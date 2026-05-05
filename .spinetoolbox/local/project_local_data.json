@@ -226,6 +226,18 @@
                         "known_filters": {}
                     }
                 }
+            },
+            "nc file ini": {
+                "export_to_ini_calib_Cwatm_stdalone": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "export_to_ini_cwatm": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
             }
         }
     },
@@ -275,6 +287,9 @@
         "export_to_ini_cwatm": {},
         "export_to_ini_calib_Cwatm_stdalone": {},
         "CWatM_standalone": {},
-        "loop_next_day": {}
+        "loop_next_day": {},
+        "nc file ini": {
+            "db_credentials": {}
+        }
     }
 }

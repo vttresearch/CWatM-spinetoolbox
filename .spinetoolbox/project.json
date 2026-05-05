@@ -77,6 +77,11 @@
                     "type": "path",
                     "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/loop_end_conditions.json"
+                },
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/specifications/Tool/export_nc_data.json"
                 }
             ]
         },
@@ -524,6 +529,42 @@
                         "scenario_filter": true
                     }
                 }
+            },
+            {
+                "name": "from nc file ini to export_to_ini_calib_Cwatm_stdalone",
+                "from": [
+                    "nc file ini",
+                    "right"
+                ],
+                "to": [
+                    "export_to_ini_calib_Cwatm_stdalone",
+                    "bottom"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from nc file ini to export_to_ini_cwatm",
+                "from": [
+                    "nc file ini",
+                    "bottom"
+                ],
+                "to": [
+                    "export_to_ini_cwatm",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
             }
         ],
         "jumps": [
@@ -572,8 +613,8 @@
         "cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 425.89044855575935,
-            "y": 29.16352814423564,
+            "x": 460.41251513538725,
+            "y": 176.33654882580694,
             "specification": "CWatM",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -858,8 +899,8 @@
         "process_to_flexTool": {
             "type": "Tool",
             "description": "",
-            "x": 597.8304579062418,
-            "y": 29.45400564714654,
+            "x": 632.3525244858696,
+            "y": 176.62702632871785,
             "specification": "process_to_flexTool",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -874,8 +915,8 @@
         "data_store_loop": {
             "type": "Data Store",
             "description": "",
-            "x": 137.67459212611098,
-            "y": 164.44972412476298,
+            "x": 172.19665870573886,
+            "y": 311.6227448063343,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
@@ -907,8 +948,8 @@
         "export_to_ini_cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 231.46791641440922,
-            "y": 28.04125641835673,
+            "x": 265.9899829940372,
+            "y": 175.21427709992804,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -931,8 +972,8 @@
         "export_to_ini_calib_Cwatm_stdalone": {
             "type": "Tool",
             "description": "",
-            "x": 244.47663034956994,
-            "y": -97.6240300606096,
+            "x": 458.01427428462875,
+            "y": -126.8051245575976,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -955,8 +996,8 @@
         "CWatM_standalone": {
             "type": "Tool",
             "description": "",
-            "x": 383.9063420375809,
-            "y": -97.57224772811759,
+            "x": 719.179694437643,
+            "y": -119.48553873465758,
             "specification": "CWatM",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -975,8 +1016,8 @@
         "loop_next_day": {
             "type": "Tool",
             "description": "",
-            "x": 318.1390530986205,
-            "y": 157.93750613444536,
+            "x": 352.6611196782484,
+            "y": 305.11052681601666,
             "specification": "loop_next_day",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -995,6 +1036,16 @@
             ],
             "kill_completed_processes": false,
             "log_process_output": false
+        },
+        "nc file ini": {
+            "type": "Data Connection",
+            "description": "",
+            "x": 323.41725532493444,
+            "y": -14.535606980895931,
+            "file_references": [],
+            "file_patterns": [],
+            "directory_references": [],
+            "db_references": []
         }
     }
 }
