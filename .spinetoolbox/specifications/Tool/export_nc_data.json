@@ -1,0 +1,13 @@
+{
+    "name": "export_nc_data",
+    "tooltype": "python",
+    "includes": [
+        "extract_netcdf_data.py"
+    ],
+    "description": "This script allows to export nc data from a specific nc file. nc file is provided as an input arguments, dates are extracted from the input data file from CWatM, coordinates of the plants are taken from the flextool database and automatically identifies the correct cell. It save the results as a csv file that can be passed to FlexTool.",
+    "inputfiles": [],
+    "inputfiles_opt": [],
+    "outputfiles": [],
+    "cmdline_args": [],
+    "includes_main_path": "../../bin"
+}
