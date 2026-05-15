@@ -272,6 +272,13 @@
                         }
                     }
                 }
+            },
+            "Flextool": {
+                "open_summary": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
             }
         }
     },
@@ -331,6 +338,7 @@
                 "username": "",
                 "password": ""
             }
-        }
+        },
+        "open_summary": {}
     }
 }

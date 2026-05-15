@@ -606,6 +606,24 @@
                         "scenario_filter": true
                     }
                 }
+            },
+            {
+                "name": "from Flextool to open_summary",
+                "from": [
+                    "Flextool",
+                    "right"
+                ],
+                "to": [
+                    "open_summary",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
             }
         ],
         "jumps": [
@@ -989,8 +1007,8 @@
         "export_to_ini_cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 265.9899829940372,
-            "y": 175.21427709992804,
+            "x": 280.6680850841672,
+            "y": 172.278656681902,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1091,8 +1109,8 @@
         "Flextool": {
             "type": "Tool",
             "description": "",
-            "x": 993.7075115018043,
-            "y": 152.6522617373525,
+            "x": 1009.8534238009473,
+            "y": 226.04277218800271,
             "specification": "Flextool",
             "execute_in_work": true,
             "cmd_line_args": [],
@@ -1115,6 +1133,17 @@
                 },
                 "schema": ""
             }
+        },
+        "open_summary": {
+            "type": "Tool",
+            "description": "",
+            "x": 1199.2009407636249,
+            "y": 228.97839260602876,
+            "specification": "open_summary",
+            "execute_in_work": true,
+            "cmd_line_args": [],
+            "kill_completed_processes": false,
+            "log_process_output": false
         }
     }
 }
