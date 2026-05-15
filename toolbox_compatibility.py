@@ -77,50 +77,53 @@ def replacetext(file, search_text, replace_text):
     # Return "Text replaced" string 
     return 
 
-path = sys.argv[0]
-inifile = sys.argv[1]
+def main():
+    path = sys.argv[0]
+    inifile = sys.argv[1]
 
-if not(os.path.isfile(inifile)):
-        msg = "Error 302: Settingsfile not found!\n"
-        raise CWATMFileError(inifile,msg)
-config = ExtParser()
-config.optionxform = str
-config.sections()
-config.read(inifile)
+    if not(os.path.isfile(inifile)):
+            msg = "Error 302: Settingsfile not found!\n"
+            raise CWATMFileError(inifile,msg)
+    config = ExtParser()
+    config.optionxform = str
+    config.sections()
+    config.read(inifile)
 
-# Get the output path from the config file
-outputfolder = config['FILE_PATHS']["PathOut"]
-print('PathOut = ' + outputfolder)
+    # Get the output path from the config file
+    outputfolder = config['FILE_PATHS']["PathOut"]
+    print('PathOut = ' + outputfolder)
 
-# Save the ini file to be re-used
-#shutil.copyfile(inifile,inifile)     
-# Replace the values in the initial conditions from the database and reset the pathfiles.
-initfolder = config["INITITIAL CONDITIONS"]["initSave"]
-current_directory = os.getcwd()
-final_directory = os.path.join(current_directory, Path(r"{}".format(outputfolder)))
-final_directory_init = os.path.join(current_directory, Path(r"{}".format(initfolder)))
-if not os.path.exists(final_directory):
-    print("Creating the directory: " + final_directory)
-    os.makedirs(final_directory)
-if not os.path.exists(final_directory_init):
-    print("Creating the directory: " + final_directory_init)
-    os.makedirs(final_directory_init)
-            # Re-write the path to the dictionnary to be used in the ini file
-#PathOut = .\output_30min4
+    # Save the ini file to be re-used
+    #shutil.copyfile(inifile,inifile)     
+    # Replace the values in the initial conditions from the database and reset the pathfiles.
+    initfolder = config["INITITIAL CONDITIONS"]["initSave"]
+    current_directory = os.getcwd()
+    final_directory = os.path.join(current_directory, Path(r"{}".format(outputfolder)))
+    final_directory_init = os.path.join(current_directory, Path(r"{}".format(initfolder)))
+    if not os.path.exists(final_directory):
+        print("Creating the directory: " + final_directory)
+        os.makedirs(final_directory)
+    if not os.path.exists(final_directory_init):
+        print("Creating the directory: " + final_directory_init)
+        os.makedirs(final_directory_init)
+                # Re-write the path to the dictionnary to be used in the ini file
+    #PathOut = .\output_30min4
 
-# Create the output folder as given in the database from the ini file
-replacetext(inifile, 'PathOut = ' + outputfolder, 'PathOut = ' + final_directory)
-replacetext(inifile, 'initSave = ' + initfolder, 'initSave = ' + final_directory_init)
+    # Create the output folder as given in the database from the ini file
+    replacetext(inifile, 'PathOut = ' + outputfolder, 'PathOut = ' + final_directory)
+    replacetext(inifile, 'initSave = ' + initfolder, 'initSave = ' + final_directory_init)
 
-print(sys.argv[1:])
+    print(sys.argv[1:])
 
-# Call cwatm 
-filename = "toolbox_cwatm.log"
-process = subprocess.Popen(["python", "run_cwatm.py"] + sys.argv[1:])
-output, errors = process.communicate()
-f = open(filename,'w')
-content = "OUTPUT:\n"+str(output)+"\nERRORS:\n"+str(errors)
-f.write(content)
-f.close()
+    # Call cwatm 
+    filename = "toolbox_cwatm.log"
+    process = subprocess.Popen(["python", "run_cwatm.py"] + sys.argv[1:])
+    output, errors = process.communicate()
+    f = open(filename,'w')
+    content = "OUTPUT:\n"+str(output)+"\nERRORS:\n"+str(errors)
+    f.write(content)
+    f.close()
 
 #subprocess.run(['python', 'run_cwatm.py'] + sys.argv[1:])
+if __name__ == "__main__":
+    main()
