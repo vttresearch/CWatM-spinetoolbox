@@ -30,7 +30,7 @@ nav:
     - navigating.md 
     - Tutorial.md
     - setting_calibration.md
-  - Coupling: example_models.md
+  - Coupling: coupling.md
   #- References: references.md
 
 plugins:
