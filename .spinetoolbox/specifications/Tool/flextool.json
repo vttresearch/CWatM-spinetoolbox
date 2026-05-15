@@ -2,22 +2,34 @@
     "name": "Flextool",
     "tooltype": "python",
     "includes": [
-        "flextoolrunner.py",
-        "flexModel3.mod",
-        "FlexTool3_base_sets.dat",
-        "glpk_4_61.dll",
-        "glpsol.exe",
-        "highs.exe",
-        "highs.opt",
-        "libgcc_s_seh-1.dll",
-        "libstdc++-6.dll",
-        "libwinpthread-1.dll",
-        "zlib1.dll"
+        "run_flextool.py",
+        "bin/glpk_4_61.dll",
+        "bin/glpsol",
+        "bin/glpsol.exe",
+        "bin/highs",
+        "bin/highs.exe",
+        "bin/highs.opt",
+        "bin/libgcc_s_seh-1.dll",
+        "bin/libstdc++-6.dll",
+        "bin/libwinpthread-1.dll",
+        "bin/zlib1.dll",
+        "flextool/compare_files.py",
+        "flextool/flextool.mod",
+        "flextool/flextoolrunner.py",
+        "flextool/flextool_base.dat",
+        "flextool/initialize_database.py",
+        "flextool/migrate_database.py",
+        "flextool/open_summary.py",
+        "flextool/plot_results.py",
+        "flextool/update_flextool.py",
+        "flextool/__init__.py"
     ],
     "description": "flextool model to be used",
     "inputfiles": [],
     "inputfiles_opt": [],
-    "outputfiles": [],
+    "outputfiles": [
+        "output/*.csv"
+    ],
     "cmdline_args": [],
-    "includes_main_path": "../../../flextool"
+    "includes_main_path": "../../../../../FlexTool"
 }

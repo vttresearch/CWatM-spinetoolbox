@@ -1,5 +1,8 @@
 import os
 import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "CWatM"))
+
 import subprocess
 from cwatm.management_modules.globals import *
 from cwatm.management_modules.messages import *
@@ -9,6 +12,8 @@ from pathlib import Path
 import io
 import time
 import shutil 
+
+
 
 class ExtParser(configparser.ConfigParser):
     """
@@ -113,7 +118,7 @@ print(sys.argv[1:])
 
 # Call cwatm 
 filename = "toolbox_cwatm.log"
-process = subprocess.Popen(["python", "run_cwatm.py"] + sys.argv[1:])
+process = subprocess.Popen(["python", "./CWatM/run_cwatm.py"] + sys.argv[1:])
 output, errors = process.communicate()
 f = open(filename,'w')
 content = "OUTPUT:\n"+str(output)+"\nERRORS:\n"+str(errors)

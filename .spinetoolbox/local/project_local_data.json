@@ -45,14 +45,19 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": true,
+                                    "SSP126_gdfl": true,
                                     "calibration": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true
                                 }
                             }
                         }
@@ -63,14 +68,19 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_gdfl": false,
                                     "calibration": true,
                                     "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": false,
+                                    "Coupling": false,
                                     "calibration_ini": true,
                                     "calibration_run": false,
-                                    "output_cwatm": false
+                                    "gdfl-126": false,
+                                    "output_cwatm": false,
+                                    "output_gdfl-126": false
                                 }
                             }
                         }
@@ -81,14 +91,19 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": true,
+                                    "SSP126_gdfl": false,
                                     "calibration": false,
-                                    "cwatm_template_30arcmin": true
+                                    "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true
                                 }
                             }
                         }
@@ -99,14 +114,19 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_gdfl": true,
                                     "calibration": false,
-                                    "cwatm_template_30arcmin": true
+                                    "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true
                                 }
                             }
                         }
@@ -126,14 +146,19 @@
                         "known_filters": {
                             "db_url@Data Store": {
                                 "scenario_filter": {
+                                    "Coupling": true,
+                                    "SSP126_gdfl": true,
                                     "calibration": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true
                                 }
                             }
                         }
@@ -226,6 +251,65 @@
                         "known_filters": {}
                     }
                 }
+            },
+            "nc file ini": {
+                "export_to_ini_calib_Cwatm_stdalone": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "export_to_ini_cwatm": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "flextool": {
+                "process_to_flexTool": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool": {
+                                "scenario_filter": {
+                                    "Test-scenario": true
+                                },
+                                "alternative_filter": {
+                                    "base": true,
+                                    "chirchik": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "vaksh": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "Flextool_cwatm": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool": {
+                                "scenario_filter": {
+                                    "Test-scenario": true
+                                },
+                                "alternative_filter": {
+                                    "base": true,
+                                    "chirchik": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "vaksh": true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Flextool_cwatm": {
+                "open_summary": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
             }
         }
     },
@@ -275,6 +359,17 @@
         "export_to_ini_cwatm": {},
         "export_to_ini_calib_Cwatm_stdalone": {},
         "CWatM_standalone": {},
-        "loop_next_day": {}
+        "loop_next_day": {},
+        "nc file ini": {
+            "db_credentials": {}
+        },
+        "flextool": {
+            "url": {
+                "username": "",
+                "password": ""
+            }
+        },
+        "Flextool_cwatm": {},
+        "open_summary": {}
     }
 }

@@ -264,7 +264,7 @@ if type(stepend) != type(StepFlexTool):
 stepend = min(stepend,StepFlexTool)
 
 # Either set it to 1D (for debugging purposes) or to stepend to get the last day of the simulation
-stepinit = "01/01/1932 1d"
+stepinit = stepend
 
 if "loopcount" in config['OPTIONS']:
     loopcount = True

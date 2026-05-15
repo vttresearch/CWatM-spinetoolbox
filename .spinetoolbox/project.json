@@ -77,6 +77,11 @@
                     "type": "path",
                     "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/loop_end_conditions.json"
+                },
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/specifications/Tool/open_summary.json"
                 }
             ]
         },
@@ -524,6 +529,96 @@
                         "scenario_filter": true
                     }
                 }
+            },
+            {
+                "name": "from nc file ini to export_to_ini_calib_Cwatm_stdalone",
+                "from": [
+                    "nc file ini",
+                    "right"
+                ],
+                "to": [
+                    "export_to_ini_calib_Cwatm_stdalone",
+                    "bottom"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from nc file ini to export_to_ini_cwatm",
+                "from": [
+                    "nc file ini",
+                    "bottom"
+                ],
+                "to": [
+                    "export_to_ini_cwatm",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from flextool to process_to_flexTool",
+                "from": [
+                    "flextool",
+                    "bottom"
+                ],
+                "to": [
+                    "process_to_flexTool",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from flextool to Flextool_cwatm",
+                "from": [
+                    "flextool",
+                    "right"
+                ],
+                "to": [
+                    "Flextool_cwatm",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from Flextool_cwatm to open_summary",
+                "from": [
+                    "Flextool_cwatm",
+                    "right"
+                ],
+                "to": [
+                    "open_summary",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
             }
         ],
         "jumps": [
@@ -555,8 +650,8 @@
         "cwatm_db": {
             "type": "Data Store",
             "description": "",
-            "x": 66.16630280295338,
-            "y": -198.6272418918036,
+            "x": 65.05241789940959,
+            "y": -199.74112679534744,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
@@ -564,7 +659,7 @@
                 "database": {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/Data/cwatm_db_default.sqlite"
+                    "path": ".spinetoolbox/items/data_store/cwatmdb_central_asia.sqlite"
                 },
                 "schema": ""
             }
@@ -572,10 +667,10 @@
         "cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 425.89044855575935,
-            "y": 29.16352814423564,
+            "x": 640.8986722865905,
+            "y": 72.59953293834295,
             "specification": "CWatM",
-            "execute_in_work": true,
+            "execute_in_work": false,
             "cmd_line_args": [
                 {
                     "type": "literal",
@@ -586,7 +681,7 @@
                     "arg": "-l"
                 }
             ],
-            "kill_completed_processes": true,
+            "kill_completed_processes": false,
             "log_process_output": true
         },
         "Data Store": {
@@ -601,7 +696,7 @@
                 "database": {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/Data/cwatm_db_default.sqlite"
+                    "path": ".spinetoolbox/items/data_store/cwatmdb_central_asia.sqlite"
                 },
                 "schema": ""
             }
@@ -616,7 +711,7 @@
             "cmd_line_args": [
                 {
                     "type": "resource",
-                    "arg": "<project>/CWatM/pytest/settings/1min/Morava/settings_morava_1min.ini"
+                    "arg": "C:\\Users\\jljean\\Teknologian Tutkimuskeskus VTT\\Integrated energy networks and technology - Documents\\Projects\\Projects\\Suomen Akatemia\\Develop2 TU-NEXUS\\data\\CWatM_settings\\13_5min_gdfl-126\\settings_CWatM_template_5min.ini"
                 }
             ],
             "kill_completed_processes": false,
@@ -626,7 +721,7 @@
             "type": "Tool",
             "description": "",
             "x": -71.66380062198964,
-            "y": -103.52084439176562,
+            "y": -104.77338927608271,
             "specification": "parse_toml",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -797,8 +892,8 @@
         "best_calib": {
             "type": "Data Store",
             "description": "",
-            "x": 755.86900097095,
-            "y": -285.8773221371838,
+            "x": 781.4241866005414,
+            "y": -285.87732213718385,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
@@ -858,14 +953,18 @@
         "process_to_flexTool": {
             "type": "Tool",
             "description": "",
-            "x": 597.8304579062418,
-            "y": 29.45400564714654,
+            "x": 850.0933495038937,
+            "y": 93.52159156238544,
             "specification": "process_to_flexTool",
             "execute_in_work": true,
             "cmd_line_args": [
                 {
                     "type": "resource",
                     "arg": "cwatm_input.ini"
+                },
+                {
+                    "type": "resource",
+                    "arg": "db_url@flextool"
                 }
             ],
             "kill_completed_processes": false,
@@ -874,8 +973,8 @@
         "data_store_loop": {
             "type": "Data Store",
             "description": "",
-            "x": 137.67459212611098,
-            "y": 164.44972412476298,
+            "x": 352.68281585694217,
+            "y": 207.88572891887029,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
@@ -883,7 +982,7 @@
                 "database": {
                     "type": "path",
                     "relative": true,
-                    "path": ".spinetoolbox/items/data_store/cwatmdb_new.sqlite"
+                    "path": ".spinetoolbox/items/data_store/cwatmdb_central_asia.sqlite"
                 },
                 "schema": ""
             }
@@ -896,8 +995,8 @@
             "file_references": [
                 {
                     "type": "path",
-                    "relative": true,
-                    "path": "CWatM/pytest/settings/1min/Morava/settings_morava_1min.ini"
+                    "relative": false,
+                    "path": "C:/Users/jljean/Teknologian Tutkimuskeskus VTT/Integrated energy networks and technology - Documents/Projects/Projects/Suomen Akatemia/Develop2 TU-NEXUS/data/CWatM_settings/13_5min_gdfl-126/settings_CWatM_template_5min.ini"
                 }
             ],
             "file_patterns": [],
@@ -907,8 +1006,8 @@
         "export_to_ini_cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 231.46791641440922,
-            "y": 28.04125641835673,
+            "x": 447.7601126470206,
+            "y": 70.19328871068376,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -931,8 +1030,8 @@
         "export_to_ini_calib_Cwatm_stdalone": {
             "type": "Tool",
             "description": "",
-            "x": 244.47663034956994,
-            "y": -97.6240300606096,
+            "x": 464.479882991462,
+            "y": -136.08469280665048,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -955,8 +1054,8 @@
         "CWatM_standalone": {
             "type": "Tool",
             "description": "",
-            "x": 383.9063420375809,
-            "y": -97.57224772811759,
+            "x": 651.670291294077,
+            "y": -136.43390744209606,
             "specification": "CWatM",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -975,8 +1074,8 @@
         "loop_next_day": {
             "type": "Tool",
             "description": "",
-            "x": 318.1390530986205,
-            "y": 157.93750613444536,
+            "x": 533.1472768294518,
+            "y": 201.37351092855266,
             "specification": "loop_next_day",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -993,6 +1092,60 @@
                     "arg": "db_url@data_store_loop"
                 }
             ],
+            "kill_completed_processes": false,
+            "log_process_output": false
+        },
+        "nc file ini": {
+            "type": "Data Connection",
+            "description": "",
+            "x": 375.10059959447415,
+            "y": -66.9693232387582,
+            "file_references": [],
+            "file_patterns": [],
+            "directory_references": [],
+            "db_references": []
+        },
+        "flextool": {
+            "type": "Data Store",
+            "description": "",
+            "x": 899.1812152092407,
+            "y": -105.21575026032457,
+            "url": {
+                "dialect": "sqlite",
+                "host": "",
+                "port": null,
+                "database": {
+                    "type": "path",
+                    "relative": false,
+                    "path": "C:/Git/CA_model/nexus_time_settings_only.sqlite"
+                },
+                "schema": ""
+            }
+        },
+        "Flextool_cwatm": {
+            "type": "Tool",
+            "description": "",
+            "x": 1094.1662220263004,
+            "y": 48.729966295437194,
+            "specification": "Flextool",
+            "execute_in_work": true,
+            "cmd_line_args": [
+                {
+                    "type": "resource",
+                    "arg": "db_url@flextool"
+                }
+            ],
+            "kill_completed_processes": false,
+            "log_process_output": false
+        },
+        "open_summary": {
+            "type": "Tool",
+            "description": "",
+            "x": 1258.84455671188,
+            "y": 54.67439282329139,
+            "specification": "open_summary",
+            "execute_in_work": true,
+            "cmd_line_args": [],
             "kill_completed_processes": false,
             "log_process_output": false
         }

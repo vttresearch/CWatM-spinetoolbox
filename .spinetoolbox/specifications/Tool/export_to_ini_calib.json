@@ -5,7 +5,9 @@
         "export_to_ini_calib.py"
     ],
     "description": "",
-    "inputfiles": [],
+    "inputfiles": [
+        "init/Rogun_20491231.nc"
+    ],
     "inputfiles_opt": [],
     "outputfiles": [
         "*.ini",
