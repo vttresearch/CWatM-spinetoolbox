@@ -2,6 +2,7 @@
 tomlkit
 pathlib
 toml
+spinedbapi
 
 # Libraries for CWatM
 plotly

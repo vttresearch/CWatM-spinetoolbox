@@ -28,11 +28,11 @@ Prior to get the workflow working:
 
 3. _cd_ into your folder `cd C:\Git\<YOUR FOLDER>\`
 
-4. clone the git repo into the folder `git clone git@github.com:jeanlouisnico/CWatM-spinetoolbox.git`
+4. clone the git repo into the folder `git@github.com:vttresearch/CWatM-spinetoolbox.git`
 
 5. create your conda environment and activate it
 
-   `conda create -n cwatm_wf python=3.11`
+   `conda create -n cwatm_wf python`
 
    `conda activate cwatm_wf`
 
@@ -98,7 +98,3 @@ NB: if you have already changed the database _cwatm_db_, while running the entir
 ## Create multiple databases
 
 If one need, you may just create a new spine database if you want to switch from databases and avoid to have everything in a single database.
-
-``` sh
-pip install mkdocs-material=="9.*" # (1)!
-```
