@@ -31,7 +31,11 @@ Some of the existing variables from CWatM need to be modified to access init val
 <details>
     <summary>Click to expand!</summary>
 
-    |    | UK0   |
-    |---:|:------|
-    |  0 | int64 |
+    | entity name            | Parameter name | Role                                                         |
+| ---------------------- | -------------- | ------------------------------------------------------------ |
+| TIME-RELATED_CONSTANTS | SpinUp         | Set the value to the same value as StepStart. This will for the model to do the warm start correctly |
+| TIME-RELATED_CONSTANTS | StepEnd        | Can be set to any value, it will be written over by the workflow |
+| TIME-RELATED_CONSTANTS | StepStart      | Start of the model, same function than the regular CWatM model |
+| INITITIAL CONDITIONS   | StepInit       | While CWatM allow duration or other values, when using it in coupling mode with FlexTool, it must be set to an individual datetime. For the first time, set it to StepStart + RollFlexTool value. In consecutive run, the value is automatically updated |
+| INITITIAL CONDITIONS   | initLoad       | Same function as CWatM model. It is overwritten automatically in the workflow when needed. first value must be of the form ./<initpath and name> |
 </details>
