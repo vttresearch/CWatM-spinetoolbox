@@ -16,7 +16,7 @@ Make sure you have installed [SpineToolbox](https://github.com/spine-tools/Spine
 
 ### FlexTool
 
-TBD
+Install [FlexTool](https://irena-flextool.github.io/flextool/install_toolbox/) in a separate repository with its custom environment
 
 ### CWatM-SpineToolbox
 
@@ -26,11 +26,11 @@ TBD
 
 3. _cd_ into your folder `cd C:\Git\<YOUR FOLDER>\`
 
-4. clone the git repo into the folder `git clone git@github.com:jeanlouisnico/CWatM-spinetoolbox.git`
+4. clone the git repo into the folder `git clone git@github.com:vttresearch/CWatM-spinetoolbox.git`
 
 5. create your conda environment and activate it
 
-   `(base) C:\Git\<YOUR FOLDER>\> conda create -n <YOUR ENV> python=3.11`
+   `(base) C:\Git\<YOUR FOLDER>\> conda create -n <YOUR ENV> python`
 
    `(base) C:\Git\<YOUR FOLDER>\> conda activate <YOUR ENV>`
 
@@ -50,7 +50,7 @@ As described in the CWatM instructions to run the model, it is best to download 
 
 !!! Warning
 
-    The weather files provided from CWatM are from 1980 to 2019 (as of February 2025). If your calibration runs start before this data, you should download the data from the ISIMIP repository (starts from 1901).
+    The weather files provided from CWatM are from 1980 to 2019 (as of February 2025). If your calibration runs start before this data, you should download the data from the ISIMIP repository (starts from 1901). If you plan to run future years, it is recommended to download the weather files directly from [ISIMIP](https://www.isimip.org/gettingstarted/input-data-bias-adjustment/details/110/).
 
 Alongside the CWatM-SpineToolbox deliverable, the *toolbox_compatibility.py* file needs to be copied to the CWatM folder. this python script allows to start different instances of CWatM from python script instead of command line as traditionally used by the CWatM community. The file is currently located under *.\CWatM-spinetoolbox\calibration\CWatM*. This python file needs to be placed under *.\CWatM* folder in the local computer.
 
@@ -95,43 +95,6 @@ Not that if you already have an existing workflow from a previous project, you c
     Please go through the SpineToolbox documentation for an extended explanation of what are each boxes role and if needed how to modify the workflow
 
 
-
-Material for MkDocs is published as a [Python package](https://pypi.org/project/mkdocs-material/) and can be installed with `pip`, ideally by using a [virtual environment](https://realpython.com/what-is-pip/#using-pip-in-a-python-virtual-environment). Open up a terminal and install Material for MkDocs with:
-
-=== "Latest"
-
-    ``` sh
-    pip install mkdocs-material
-    ```
-
-=== "9.x"
-
-    ``` sh
-    pip install mkdocs-material=="9.*" # (1)!
-    ```
-    
-    1.  Material for MkDocs uses [semantic versioning][^2], which is why it's a
-        good idea to limit upgrades to the current major version.
-    
-        This will make sure that you don't accidentally [upgrade to the next
-        major version], which may include breaking changes that silently corrupt
-        your site. Additionally, you can use `pip freeze` to create a lockfile,
-        so builds are reproducible at all times:
-    
-        ```
-        pip freeze > requirements.txt
-        ```
-    
-        Now, the lockfile can be used for installation:
-    
-        ```
-        pip install -r requirements.txt
-        ```
-
-[^2]:
-    Note that improvements of existing features are sometimes released as
-    patch releases, like for example improved rendering of content tabs, as
-    they're not considered to be new features.
 
 
 !!! tip
