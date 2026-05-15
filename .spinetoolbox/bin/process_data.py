@@ -237,8 +237,12 @@ def extract_cdf_data(url, ini):
     stepstart = stepstartimport.strftime('%Y-%m-%d')
     stependimport = datetime.strptime(config['TIME-RELATED_CONSTANTS']["StepEnd"], '%d/%m/%Y')
     stepend = stependimport.strftime('%Y-%m-%d')
+    
     # List the dam names to be extracted. the names must match the unit names from the FlexTool database.
+    # !!!! THIS NEEDS TO BE UPDATED !!!! 
     dam_names = ["rogun"]  # example dam names, replace with actual names
+    # !!!! THIS NEEDS TO BE UPDATED !!!! 
+    
     # Get the lat and lon from the settings file
     with DatabaseMapping(url) as db_map:
         db_map.fetch_all("entity")  # Prefetch data. May provide a speed boost for later operations.
@@ -282,7 +286,7 @@ def extract_cdf_data(url, ini):
                             lon=unit["lat"],
                             date_start=stepstart,
                             date_end=stepend,
-                            variable="discharge",
+                            variable=var,
                             csv_file="output.csv")
     # set the name of the output file (atm hardcoded, but can be defined in the settings file)
 

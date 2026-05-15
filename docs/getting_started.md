@@ -26,7 +26,7 @@ Install [FlexTool](https://irena-flextool.github.io/flextool/install_toolbox/) i
 
 3. _cd_ into your folder `cd C:\Git\<YOUR FOLDER>\`
 
-4. clone the git repo into the folder `git clone git@github.com:vttresearch/CWatM-spinetoolbox.git`
+4. clone the git repo into the folder with its submodules `git clone git@github.com:vttresearch/CWatM-spinetoolbox.git`
 
 5. create your conda environment and activate it
 
