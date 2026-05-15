@@ -69,9 +69,11 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
     # 1. Open dataset                                                      #
     # ------------------------------------------------------------------ #
     print(f"\nOpening: {nc_file}")
-    ds = xr.open_dataset(nc_file, use_cftime=True)
+    time_coder = xr.coders.CFDatetimeCoder(use_cftime=True)
+    ds = xr.open_dataset(nc_file, decode_times=time_coder)
+    #ds = xr.open_dataset(nc_file, use_cftime=True)
 
-    print("\n── Dataset overview ──────────────────────────────────────")
+    print("\n Dataset overview".encode("utf-8"))
     print(ds)
 
     # ------------------------------------------------------------------ #
@@ -185,7 +187,7 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
             sys.exit(f"No data found between {date_start} and {date_end}. "
                      f"Check the time range of your file.")
 
-        print(f"\nDate range          : {date_start} → {date_end}  "
+        print(f"\nDate range          : {date_start} -> {date_end}  "
               f"({point_filtered.sizes[time_name]} time steps)")
         period_label = f"{date_start} to {date_end}"
 
@@ -198,16 +200,16 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
     units = da.attrs.get("units", "–")
     long_name = da.attrs.get("long_name", variable)
 
-    print(f"\n── Time series: {long_name} [{units}] ───────────────────────")
+    print(f"\n Time series: {long_name} [{units}] ")
     print(f"  {'Timestamp':<26}  {'Value':>12}")
-    print(f"  {'─'*26}  {'─'*12}")
+    #print(f"  {'─'*26}  {'─'*12}")
     for t, v in zip(times, values):
         print(f"  {str(t):<26}  {v:>12.4f}")
 
     # ------------------------------------------------------------------ #
     # 7. Summary statistics                                               #
     # ------------------------------------------------------------------ #
-    print(f"\n── Summary ───────────────────────────────────────────────")
+    print(f"\n Summary ")
     print(f"  Min    : {float(np.nanmin(values)):.4f} {units}")
     print(f"  Max    : {float(np.nanmax(values)):.4f} {units}")
     print(f"  Mean   : {float(np.nanmean(values)):.4f} {units}")
@@ -233,7 +235,7 @@ def extract_timeseries(nc_file, lat, lon, year=None, date_start=None, date_end=N
             # Data rows
             for t, v in zip(times, values):
                 writer.writerow([str(t)[:19], f"{v:.6f}"])
-        print(f"\n── CSV saved ─────────────────────────────────────────────")
+        print(f"\n CSV saved ")
         print(f"  File  : {csv_file}")
         print(f"  Rows  : {len(values)}")
 
