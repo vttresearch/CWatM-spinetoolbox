@@ -28,3 +28,10 @@ Some of the existing variables from CWatM need to be modified to access init val
 | INITITIAL CONDITIONS   | StepInit       | While CWatM allow duration or other values, when using it in coupling mode with FlexTool, it must be set to an individual datetime. For the first time, set it to StepStart + RollFlexTool value. In consecutive run, the value is automatically updated |
 | INITITIAL CONDITIONS   | initLoad       | Same function as CWatM model. It is overwritten automatically in the workflow when needed. first value must be of the form ./<initpath and name> |
 
+<details>
+    <summary>Click to expand!</summary>
+
+    |    | UK0   |
+    |---:|:------|
+    |  0 | int64 |
+</details>
