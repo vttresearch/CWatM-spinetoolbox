@@ -9,7 +9,8 @@
         "CWatM_Module/management_modules/__pycache__/globals.cpython-311.pyc",
         "CWatM_Module/management_modules/__pycache__/globals.cpython-39.pyc",
         "CWatM_Module/management_modules/__pycache__/messages.cpython-311.pyc",
-        "CWatM_Module/management_modules/__pycache__/messages.cpython-39.pyc"
+        "CWatM_Module/management_modules/__pycache__/messages.cpython-39.pyc",
+        "extract_netcdf_data.py"
     ],
     "description": "",
     "inputfiles": [

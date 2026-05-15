@@ -114,10 +114,10 @@
         },
         "process_to_flexTool": {
             "execution_settings": {
-                "env": "conda",
-                "kernel_spec_name": "conda-env-flex_cwatm-py",
+                "kernel_spec_name": "",
+                "env": "",
                 "use_jupyter_console": false,
-                "executable": ""
+                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
             }
         },
         "loop_next_day": {
@@ -142,6 +142,14 @@
                 "env": "",
                 "use_jupyter_console": false,
                 "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flex_cwatm/python.exe"
+            }
+        },
+        "open_summary": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flextool/python.exe"
             }
         }
     }

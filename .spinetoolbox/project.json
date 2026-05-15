@@ -82,6 +82,11 @@
                     "type": "path",
                     "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/export_nc_data.json"
+                },
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/specifications/Tool/open_summary.json"
                 }
             ]
         },
@@ -565,6 +570,42 @@
                         "scenario_filter": true
                     }
                 }
+            },
+            {
+                "name": "from flextool_db to process_to_flexTool",
+                "from": [
+                    "flextool_db",
+                    "bottom"
+                ],
+                "to": [
+                    "process_to_flexTool",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from flextool_db to Flextool",
+                "from": [
+                    "flextool_db",
+                    "right"
+                ],
+                "to": [
+                    "Flextool",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
             }
         ],
         "jumps": [
@@ -899,8 +940,8 @@
         "process_to_flexTool": {
             "type": "Tool",
             "description": "",
-            "x": 632.3525244858696,
-            "y": 176.62702632871785,
+            "x": 669.0477797111948,
+            "y": 183.96607737378287,
             "specification": "process_to_flexTool",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1016,8 +1057,8 @@
         "loop_next_day": {
             "type": "Tool",
             "description": "",
-            "x": 352.6611196782484,
-            "y": 305.11052681601666,
+            "x": 354.1289298872614,
+            "y": 305.1105268160167,
             "specification": "loop_next_day",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1040,12 +1081,40 @@
         "nc file ini": {
             "type": "Data Connection",
             "description": "",
-            "x": 298.2280559662348,
-            "y": -24.45563973576905,
+            "x": 299.69586617524783,
+            "y": -18.584398899717026,
             "file_references": [],
             "file_patterns": [],
             "directory_references": [],
             "db_references": []
+        },
+        "Flextool": {
+            "type": "Tool",
+            "description": "",
+            "x": 993.7075115018043,
+            "y": 152.6522617373525,
+            "specification": "Flextool",
+            "execute_in_work": true,
+            "cmd_line_args": [],
+            "kill_completed_processes": false,
+            "log_process_output": false
+        },
+        "flextool_db": {
+            "type": "Data Store",
+            "description": "",
+            "x": 799.9565639120876,
+            "y": 8.806861254078036,
+            "url": {
+                "dialect": "sqlite",
+                "host": "",
+                "port": null,
+                "database": {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/items/flextool_db/flextool_db.sqlite"
+                },
+                "schema": ""
+            }
         }
     }
 }

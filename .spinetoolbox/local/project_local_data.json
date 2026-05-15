@@ -46,12 +46,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "coupling": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "coupling": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -64,12 +66,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "coupling": false,
                                     "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": false,
                                     "calibration_ini": true,
                                     "calibration_run": false,
+                                    "coupling": false,
                                     "output_cwatm": false
                                 }
                             }
@@ -82,12 +86,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
-                                    "cwatm_template_30arcmin": true
+                                    "coupling": true,
+                                    "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "coupling": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -100,12 +106,14 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
+                                    "coupling": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "coupling": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -238,6 +246,32 @@
                         "known_filters": {}
                     }
                 }
+            },
+            "flextool_db": {
+                "process_to_flexTool": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool_db": {
+                                "scenario_filter": {},
+                                "alternative_filter": {
+                                    "Base": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "Flextool": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool_db": {
+                                "scenario_filter": {},
+                                "alternative_filter": {
+                                    "Base": true
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
@@ -290,6 +324,13 @@
         "loop_next_day": {},
         "nc file ini": {
             "db_credentials": {}
+        },
+        "Flextool": {},
+        "flextool_db": {
+            "url": {
+                "username": "",
+                "password": ""
+            }
         }
     }
 }
