@@ -10,13 +10,19 @@ import re
 import fileinput
 import json
 import datetime
-url = sys.argv[1]
-outfile = sys.argv[2]
-calib = sys.argv[3]
 
-#url = "sqlite:///c:/git/cwatm-spinetoolbox-dev/.spinetoolbox/data/basic_model.sqlite"
-#outfile = "cwatm_input"
-#calib = "False"
+debug = False
+
+if debug:
+	url = "sqlite:///c:/git/cwatm-spinetoolbox-dev/.spinetoolbox/Data/cwatm_db_default.sqlite"
+	outfile = "cwatm_input"
+	calib = "False"
+else:
+	url = sys.argv[1]
+	outfile = sys.argv[2]
+	calib = sys.argv[3]
+
+
 
 def use_regex_date(filein):
 
@@ -45,7 +51,6 @@ def replacetext(file, search_text, replace_text):
   
     # Return "Text replaced" string 
     return
-
 def replace_path(strin, dic, maincat):
 	# identify if this is a path string
 	str_mod = strin
@@ -329,30 +334,34 @@ def retrieve_db(url, outfile, calib):
 		replacetext(outfile+".ini", "\\\\", "\\")
 		use_regex_date(outfile+".ini")
 
-# Write to a cwatm compatible ini file
-retrieve_db(url, outfile, calib) 
+def main():
+	# Write to a cwatm compatible ini file
+	retrieve_db(url, outfile, calib) 
 
-# Get the alternative for each scenario where it writes the scenario and the winning alternative in a separate file
+	# Get the alternative for each scenario where it writes the scenario and the winning alternative in a separate file
 
-with DatabaseMapping(url) as db_map:
-	filter_configs = db_map.get_filter_configs()
-	for config in filter_configs:
-		scenario_name = filter_tools.name_from_dict(config)
-		if scenario_name is not None:
-			break
-		else:
-			raise RuntimeError("no scenario filter in database mapping")
+	with DatabaseMapping(url) as db_map:
+		filter_configs = db_map.get_filter_configs()
+		for config in filter_configs:
+			scenario_name = filter_tools.name_from_dict(config)
+			if scenario_name is not None:
+				break
+			else:
+				raise RuntimeError("no scenario filter in database mapping")
+			
+		scenario_alternatives = db_map.get_scenario_alternative_items(scenario_name=scenario_name)
+		scenario_item = db_map.get_scenario_item(name=scenario_name)
+		print(f"alt: {scenario_item['alternative_name_list']}")
+		setofalt = dict()
+		#for i in scenario_item['alternative_name_list']:
+		#	setofalt[i] = None
+		for item in scenario_alternatives: 
+			#print(f"alt: {item['alternative_name']} rank: {item['rank']} (highest rank wins)")
+			print(f"ordered alternatives {scenario_item['alternative_name_list']} (last alt wins)")
+			setofalt[item['rank']] = item['alternative_name']
 		
-	scenario_alternatives = db_map.get_scenario_alternative_items(scenario_name=scenario_name)
-	scenario_item = db_map.get_scenario_item(name=scenario_name)
-	print(f"alt: {scenario_item['alternative_name_list']}")
-	setofalt = dict()
-	#for i in scenario_item['alternative_name_list']:
-	#	setofalt[i] = None
-	for item in scenario_alternatives: 
-		#print(f"alt: {item['alternative_name']} rank: {item['rank']} (highest rank wins)")
-		print(f"ordered alternatives {scenario_item['alternative_name_list']} (last alt wins)")
-		setofalt[item['rank']] = item['alternative_name']
-	
-	with open('alt_list.json', 'w') as json_file:     
-		json.dump(setofalt, json_file)
+		with open('alt_list.json', 'w') as json_file:     
+			json.dump(setofalt, json_file)
+
+if __name__ == "__main__":
+    main()
