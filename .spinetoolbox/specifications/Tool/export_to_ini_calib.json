@@ -8,8 +8,8 @@
     "inputfiles": [],
     "inputfiles_opt": [],
     "outputfiles": [
-        "*.ini",
-        "alt_list.json"
+        "alt_list.json",
+        "cwatm_input.ini"
     ],
     "cmdline_args": [],
     "includes_main_path": "../../bin"

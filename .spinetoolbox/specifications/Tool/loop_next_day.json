@@ -15,10 +15,7 @@
         "cwatm_input.ini"
     ],
     "inputfiles_opt": [],
-    "outputfiles": [
-        "cwatm_input.ini",
-        "out.dat"
-    ],
+    "outputfiles": [],
     "cmdline_args": [],
     "includes_main_path": "../../bin"
 }

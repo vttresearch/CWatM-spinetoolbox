@@ -25,7 +25,9 @@ import json
 import spinedb_api as api
 import collections.abc
 import glob 
-#from pathlib import Path
+import shutil
+import xarray
+from pathlib import Path, PureWindowsPath
 import os
 
 # get the ini file
@@ -194,33 +196,100 @@ def convert_time(date):
         date = date.date()
     return date
 
-def getncfilename(filepath):
-    spath = filepath.replace('\\',' ').replace('/',' ').split()
-    #filename = spath.pop()
-    print(spath)
-    spath.pop()
-    print(spath)
-    realpath = '/'.join(spath)
-    
-    print(realpath)
-    allncfiles = glob.glob(realpath + "/*.nc")
-    
-    # Get all the nc file as a list
-    output_list = []
-    for x in allncfiles:
-        xpath = x.replace('\\',' ').replace('/',' ').split()
-        output_list.append(xpath.pop())
+def getncfilename(initsave, stepend):
+    """Build the CWatM warm-start file path saved at ``stepend``.
 
-    print(output_list)
-    ncfilepath = "./"
-    if len(output_list)>1:
-        # Get the latest saved files
-        ncfilepath=max(allncfiles, key=os.path.getctime) 
-    elif len(output_list) == 0:
-        print("no nc file in the path indicated. You might need to run CWatM to get them generated.")
-    else:
-        ncfilepath = realpath + '/' + output_list[0]
-    return ncfilepath
+    CWatM writes the init file as ``{initSave}_{YYYYMMDD}.nc`` at the end of
+    its simulation, so the file to load next is the ``initSave`` prefix with
+    the just-finished run's ``StepEnd`` date appended.
+    """
+    return f"{initsave}_{stepend:%Y%m%d}.nc"
+
+
+def parse_ini(ini):
+    # Read the ini file
+    config = ExtParser()
+    config.optionxform = str
+    config.sections()
+    config.read(ini)
+    return config
+
+
+def combine_outputs(ini):
+    # Read the ini file
+    config = parse_ini(ini)
+    # Select a fixed output path to store the final outputs
+    outpath = os.path.join(config['FILE_PATHS']["PathCombinednc"], '')
+    #create the output folder if it does not exist
+    if not os.path.exists(outpath):
+        print("Creating the directory: " + outpath)
+        os.makedirs(outpath)
+    # Get the current output to merge with from PathOut
+    currentoutput = os.path.join(config['FILE_PATHS']["PathOut"], '')
+    # Get a list of each output
+    all_nc_files = list(Path(currentoutput).rglob("*.nc"))
+    print(currentoutput)
+    print(all_nc_files[0])
+    # Get the loop count variable to see if this is the first loop or not
+    loopcount = config['OPTIONS']["loopcount"]    
+    if loopcount=="false":
+            # Copy all the nc files to the final output locations
+            print(f"Moving output file to: {outpath}")
+            for f in all_nc_files:
+                #print(f)
+                shutil.move(PureWindowsPath(f), outpath)
+            return
+    # Get the initload path
+    #initpath  = config['INITITIAL CONDITIONS']["initLoad"]
+    #spath = initpath.replace('\\',' ').replace('/',' ').split()
+    #sprevious = spath[:-2]
+    #previousoutput = '/'.join(sprevious) + "/output"  
+    
+    for file in all_nc_files:
+        daily = False
+        time = True
+        var = file.name[:-3]
+        if file.name[:-3].split('_')[-1] == 'daily':
+            var = var[:-6]
+            daily = True
+        print(list(Path(currentoutput).rglob("*.nc"))[0])
+        file_names = file.name
+        print(f"Processing file: {file_names}")
+        listfiles = [outpath + "/" + file_names,currentoutput + "/" + file_names]
+        if daily:
+            if file_names not in os.listdir(outpath):
+                shutil.copy(os.path.join(currentoutput, file_names), os.path.join(outpath, file_names))
+                print(f"File {file_names} has been moved to: {outpath}")
+            else:
+                with xarray.open_mfdataset(listfiles,combine = 'nested', concat_dim="time") as combined:
+                    file_path = Path(f"{outpath}{file_names}")
+                    # Write the file to a different name to prevent xarray errors
+                    if file_path.exists():
+                        combined.to_netcdf(f"{outpath}bis{file_names}", mode='a')
+                    else:
+                        combined.to_netcdf(f"{outpath}bis{file_names}")
+                    print(f"File {file_names} has been combined and saved to: {outpath}bis{file_names}")
+                # Rename the file to its original name after it has been saved
+                old_file = f"{outpath}bis{file_names}"
+                new_file = f"{outpath}{file_names}"
+                print("Cleaning the place...")
+                print(f"    Removing old files: {outpath}{file_names}")
+                print(list(Path(currentoutput).rglob("*.nc"))[0])
+                if file_path.exists():
+                    os.remove(new_file)
+                print(f"    Renaming output file")
+                os.rename(old_file, new_file)
+            original_file = f"{currentoutput}/{file_names}"
+            print(f"    Removing original files: {currentoutput}/{file_names}")
+            os.remove(original_file)
+        else:
+            # This means the file does not have a time dimension and can simply be replaced by the current output
+            if os.path.isfile(outpath + "/" + file_names):
+                os.remove(outpath+'/'+ file_names)
+                #print(file_names, 'has been removed from: ', outpath)   
+            shutil.move(os.path.join(currentoutput, file_names), os.path.join(outpath, file_names))
+            #print("New file has been moved to:", outpath)
+
 
 def main():
     if not(os.path.isfile(inifile)):
@@ -232,12 +301,18 @@ def main():
     config.sections()
     config.read(inifile)
 
+    # Combine the CWatM dispatch re-run outputs into the combined folder
+    # (moved here from process_data.py).
+    combine_outputs(inifile)
+
     # Get the Looping time 
     RollFlexTool = config['TIME-RELATED_CONSTANTS']["RollFlexTool"]
     RollFlexToolnum = int(RollFlexTool.replace('D', ''))
     # Get the Stepend value
     stepend = config['TIME-RELATED_CONSTANTS']["StepEnd"]
     stepend = convert_time(stepend)
+    # The just-finished run's end date names the CWatM warm-start file.
+    laststepend = stepend
 
     # Set the start date when it previously stopped to enhance a warm start and go straight to the spinup time
     stepstart = stepend + timedelta(days=1)
@@ -246,7 +321,7 @@ def main():
     spinup = convert_time(spinup)
 
     # Define the new end date based on the rolling horizon
-    stepend = stepstart + timedelta(days=RollFlexToolnum)
+    stepend = stepstart + timedelta(days=RollFlexToolnum)- timedelta(days=1)
 
     StepFlexTool = config['TIME-RELATED_CONSTANTS']["StepFlexTool"]
     StepFlexTool = convert_time(StepFlexTool)
@@ -265,8 +340,9 @@ def main():
     stepend = min(stepend,StepFlexTool)
 
     # Either set it to 1D (for debugging purposes) or to stepend to get the last day of the simulation
-    stepinit = "01/01/1932 1d"
-
+    #unsure why this exists
+    #stepinit = "01/01/1932 1d"
+    #stepinit = "01/01/1932"
     if "loopcount" in config['OPTIONS']:
         loopcount = True
         print(f"The variable loopcount was found in the database, its value is {loopcount} of type {type(loopcount)}")
@@ -280,8 +356,8 @@ def main():
     # Need to find the initfile where it is saved and find its name
     initfolderload = config['INITITIAL CONDITIONS']["initSave"]
 
-    # Get the nc file name from the last day that was generated by CWatM
-    ncfilepath = getncfilename(initfolderload)
+    # Build the init file path from initSave + the run's StepEnd date
+    ncfilepath = getncfilename(initfolderload, laststepend)
 
     # Set the start date when it previously stopped to enhance a warm start and go straight to the spinup time
     
@@ -290,7 +366,7 @@ def main():
 
     # Look for the variables in the database from the winning alternative to the lowest ranked alternative and change the value
     highrank = len(data_alt)
-    allocate_var_to_alt("StepInit", stepinit, highrank, data_alt, url, "INITITIAL CONDITIONS")
+    #allocate_var_to_alt("StepInit", stepinit, highrank, data_alt, url, "INITITIAL CONDITIONS")
     allocate_var_to_alt("StepStart", stepstart, highrank, data_alt, url, "TIME-RELATED_CONSTANTS")
     allocate_var_to_alt("SpinUp", spinup, highrank, data_alt, url, "TIME-RELATED_CONSTANTS")
     allocate_var_to_alt("StepEnd", stepend, highrank, data_alt, url, "TIME-RELATED_CONSTANTS")
@@ -299,7 +375,7 @@ def main():
     # Re-allocate the path of the init load based on the init save path
     allocate_var_to_alt("initLoad", ncfilepath, highrank, data_alt, url, "INITITIAL CONDITIONS")
 
-    print(stepinit)
+    #print(stepinit)
 
 if __name__ == "__main__":
     main()

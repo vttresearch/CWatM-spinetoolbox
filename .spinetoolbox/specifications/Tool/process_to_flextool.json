@@ -16,11 +16,11 @@
     "inputfiles": [
         "cwatm_input.ini"
     ],
-    "inputfiles_opt": [
-        "init/*.nc"
-    ],
+    "inputfiles_opt": [],
     "outputfiles": [
-        "*.nc"
+        "*.nc",
+        "cwatm_input.ini",
+        "output.csv"
     ],
     "cmdline_args": [],
     "includes_main_path": "../../bin"

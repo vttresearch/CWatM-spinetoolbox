@@ -106,8 +106,28 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
-                                    "coupling": false,
-                                    "cwatm_template_30arcmin": true
+                                    "coupling": true,
+                                    "cwatm_template_30arcmin": false
+                                },
+                                "alternative_filter": {
+                                    "Base": true,
+                                    "calibration_ini": true,
+                                    "calibration_run": true,
+                                    "coupling": true,
+                                    "output_cwatm": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "export_to_ini_cwatm (1)": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@cwatm_db": {
+                                "scenario_filter": {
+                                    "calibration": false,
+                                    "coupling": true,
+                                    "cwatm_template_30arcmin": false
                                 },
                                 "alternative_filter": {
                                     "Base": true,
@@ -134,16 +154,19 @@
                         "known_filters": {
                             "db_url@Data Store": {
                                 "scenario_filter": {
+                                    "Coupling": true,
+                                    "SSP126_gdfl": true,
                                     "calibration": true,
-                                    "coupling": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "coupling": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true
                                 }
                             }
                         }
@@ -197,18 +220,6 @@
                     }
                 }
             },
-            "export_to_ini_cwatm": {
-                "loop_next_day": {
-                    "filter_settings": {
-                        "known_filters": {}
-                    }
-                },
-                "Flextool roll (1)": {
-                    "filter_settings": {
-                        "known_filters": {}
-                    }
-                }
-            },
             "export_to_ini_calib_Cwatm_stdalone": {
                 "CWatM_standalone": {
                     "filter_settings": {
@@ -230,30 +241,61 @@
                     }
                 }
             },
-            "process_to_flexTool": {
+            "export_to_ini_cwatm": {
+                "cwatm": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
                 "loop_next_day": {
                     "filter_settings": {
                         "known_filters": {}
                     }
                 }
             },
-            "nc file ini": {
-                "export_to_ini_calib_Cwatm_stdalone": {
-                    "filter_settings": {
-                        "known_filters": {}
-                    }
-                },
-                "export_to_ini_cwatm": {
+            "cwatm re-run with dispatch": {
+                "loop_next_day": {
                     "filter_settings": {
                         "known_filters": {}
                     }
                 }
             },
-            "flextool_db": {
-                "Flextool": {
+            "FlexTool_to_CWatM_dispatch": {
+                "cwatm re-run with dispatch": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Output_path": {
+                "FlexTool_to_CWatM_dispatch": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "Flextool roll": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "Flextool roll (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Flextool roll": {
+                "FlexTool_to_CWatM_dispatch": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "flextool": {
+                "Flextool roll": {
                     "filter_settings": {
                         "known_filters": {
-                            "db_url@flextool_db": {
+                            "db_url@flextool": {
                                 "scenario_filter": {},
                                 "alternative_filter": {
                                     "Base": true
@@ -265,7 +307,31 @@
                 "Flextool roll (1)": {
                     "filter_settings": {
                         "known_filters": {
-                            "db_url@flextool_db": {
+                            "db_url@flextool": {
+                                "scenario_filter": {},
+                                "alternative_filter": {
+                                    "Base": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "process_to_flexTool": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool": {
+                                "scenario_filter": {},
+                                "alternative_filter": {
+                                    "Base": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "FlexTool_to_CWatM_dispatch": {
+                    "filter_settings": {
+                        "known_filters": {
+                            "db_url@flextool": {
                                 "scenario_filter": {},
                                 "alternative_filter": {
                                     "Base": true
@@ -275,8 +341,34 @@
                     }
                 }
             },
-            "Flextool": {
-                "open_summary": {
+            "Reset rolling": {
+                "cwatm_db": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "flextool": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "export_to_ini_cwatm (1)": {
+                "Flextool roll (1)": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "process_to_flexTool": {
+                "Flextool roll": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Flextool roll (1)": {
+                "export_to_ini_cwatm": {
                     "filter_settings": {
                         "known_filters": {}
                     }
@@ -289,20 +381,13 @@
                     }
                 }
             },
-            "Reset rolling": {
-                "cwatm_db": {
+            "Reservoirs coupled": {
+                "FlexTool_to_CWatM_dispatch": {
                     "filter_settings": {
                         "known_filters": {}
                     }
                 },
-                "flextool_db": {
-                    "filter_settings": {
-                        "known_filters": {}
-                    }
-                }
-            },
-            "Flextool roll (1)": {
-                "cwatm": {
+                "process_to_flexTool": {
                     "filter_settings": {
                         "known_filters": {}
                     }
@@ -357,21 +442,26 @@
         "export_to_ini_calib_Cwatm_stdalone": {},
         "CWatM_standalone": {},
         "loop_next_day": {},
-        "nc file ini": {
-            "db_credentials": {}
-        },
-        "Flextool": {},
-        "flextool_db": {
+        "flextool": {
             "url": {
                 "username": "",
                 "password": ""
             }
         },
-        "open_summary": {},
+        "FlexTool_to_CWatM_dispatch": {},
+        "Output_path": {
+            "db_credentials": {}
+        },
+        "cwatm re-run with dispatch": {},
+        "Flextool roll": {},
+        "Flextool roll (1)": {},
+        "Reset rolling": {},
+        "export_to_ini_cwatm (1)": {},
         "Time Constants": {
             "db_credentials": {}
         },
-        "Reset rolling": {},
-        "Flextool roll (1)": {}
+        "Reservoirs coupled": {
+            "db_credentials": {}
+        }
     }
 }

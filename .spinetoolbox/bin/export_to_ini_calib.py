@@ -192,10 +192,9 @@ def retrieve_db(url, outfile, calib):
 					initfile = initpath
 					print(timesaved.value)
 				data = initfile + timesaved.value.strftime("%Y%m%d") + ".nc"
-
+				print("InitLoad = ", data)
 				tomldoc["INITITIAL CONDITIONS"]["initLoad"] = data
 
-			# Change the StepInit to the value of StepEnd in case the initSave value is true
 		# Check if the time related constant for the coupling exist. If not, continue as is otherwise check that the values are correctly allocated
 		if not my_dictionary["TIME-RELATED_CONSTANTS"] == None:
 			data_spinup = get_values_spindedbapi(url, "TIME-RELATED_CONSTANTS", "SpinUp")
@@ -210,8 +209,13 @@ def retrieve_db(url, outfile, calib):
 				# This means that the variable exists in the dictionnary and can be checked
 				timediff = data_stepend.value - data_spinup.value
 				if not data_rollflextool.value.days == timediff.days:
-					data_stepend_bis = data_spinup.value + data_rollflextool.value
+					# Recalculate StepEnd based on SpinUp and RollFlexTool values
+					# the step_end day is included in cwatm timeline, therefore -1day
+					data_stepend_bis = data_spinup.value + data_rollflextool.value - datetime.timedelta(days=1)
 					tomldoc["TIME-RELATED_CONSTANTS"]["StepEnd"] = data_stepend_bis.strftime("%Y-%m-%d")
+					# Change the StepInit to the value of StepEnd in case the initSave value is true
+					if my_dictionary["INITITIAL CONDITIONS"]["initSave"]:
+						tomldoc["INITITIAL CONDITIONS"]["StepInit"] = data_stepend_bis.strftime("%Y-%m-%d")
 		# Create output folders for each scenario and avoid writing errors in files
 		#print(my_dictionary)
 		if not my_dictionary["FILE_PATHS"] == None:
@@ -228,6 +232,7 @@ def retrieve_db(url, outfile, calib):
 					print("		Loopcount exists, all good")
 					#my_dictionary["OPTIONS"]["loopcount"] = True
 					#tomldoc["OPTIONS"]["loopcount"] = True
+
 				else:
 					# Create the key and set it to 0
 					print("		Loopcount does not exist and will be set to False")
@@ -236,35 +241,52 @@ def retrieve_db(url, outfile, calib):
 				if my_dictionary["OPTIONS"]["loopcount"] == True:
 					# This means we already did one loop
 					# Get the old path from the previous run where the file was saved and set the loadinit path with this path
-					final_directory_init_save = my_dictionary["INITITIAL CONDITIONS"]["initLoad"]
+					final_directory_init_load = my_dictionary["INITITIAL CONDITIONS"]["initLoad"]
 				else:
 					#This means this is the first loop. The init filepath needs to be set and the init save 
 					initfolderload = my_dictionary["INITITIAL CONDITIONS"]["initLoad"]
-					final_directory_init_save = os.path.join(current_directory, Path(r"{}".format(initfolderload)))
+					final_directory_init_load = os.path.join(current_directory, Path(r"{}".format(initfolderload)))
+
+					#clear outputfolders and make them if they do not exist
+					currentoutput = os.path.join(my_dictionary['FILE_PATHS']["PathOut"], '')
+					# 'temp' folder parallel to the current output folder
+					temp_dir = Path(currentoutput).parent / "temp"
+					path_out = os.path.join(my_dictionary['FILE_PATHS']["PathOut"],Path(r"{}".format(my_dictionary['FILE_PATHS']["PathOut"])))
+					path_combined = os.path.join(my_dictionary['FILE_PATHS']["PathCombinednc"],Path(r"{}".format(my_dictionary['FILE_PATHS']["PathCombinednc"])))
+					folders_to_clear = [path_out, path_combined, temp_dir]
+
+					for folder in folders_to_clear:
+						if os.path.exists(folder) and os.path.isdir(folder):
+							for temp_file in os.listdir(folder):
+								temp_file_path = os.path.join(folder, temp_file)
+								if os.path.isfile(temp_file_path):
+									os.remove(temp_file_path)
+						if not os.path.exists(folder):
+							os.makedirs(folder)
 			else:
 				#This means this is the first loop. The init filepath needs to be set and the init save 
 				initfolderload = my_dictionary["INITITIAL CONDITIONS"]["initLoad"]
-				final_directory_init_save = os.path.join(current_directory, Path(r"{}".format(initfolderload)))
+				final_directory_init_load = os.path.join(current_directory, Path(r"{}".format(initfolderload)))
 			
 			outputfolder = my_dictionary["FILE_PATHS"]["PathOut"]
 			initfoldersave = my_dictionary["INITITIAL CONDITIONS"]["initSave"]
 			# If the paths are relative, re-write them. !!!! Path should be relative to work in Toolbox !!!!
 			final_directory = os.path.join(current_directory, Path(r"{}".format(outputfolder)))
 			final_directory_init = os.path.join(current_directory, Path(r"{}".format(initfoldersave)))
-			
+
 			if not os.path.exists(final_directory):
 				os.makedirs(final_directory)
 			if not os.path.exists(final_directory_init):
 				os.makedirs(final_directory_init)
-			if not os.path.exists(final_directory_init_save):
-				os.makedirs(final_directory_init_save)
+			if not os.path.exists(final_directory_init_load):
+				os.makedirs(final_directory_init_load)
             # Re-write the path to the dictionnary to be used in the ini file
 			tomldoc["FILE_PATHS"]["PathOut"]=final_directory
 			my_dictionary["FILE_PATHS"]["PathOut"] = final_directory
 			tomldoc["INITITIAL CONDITIONS"]["initSave"]=final_directory_init
 			my_dictionary["INITITIAL CONDITIONS"]["initSave"] = final_directory_init 
-			tomldoc["INITITIAL CONDITIONS"]["initLoad"]=final_directory_init_save
-			my_dictionary["INITITIAL CONDITIONS"]["initLoad"] = final_directory_init_save 
+			tomldoc["INITITIAL CONDITIONS"]["initLoad"]=final_directory_init_load
+			my_dictionary["INITITIAL CONDITIONS"]["initLoad"] = final_directory_init_load 
 		else:
 			try:
 				del my_dictionary['FILE_PATHS']

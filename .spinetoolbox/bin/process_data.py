@@ -10,7 +10,7 @@
 # Author:      Jean-Nicolas Louis
 #
 # Created:     15/07/2024
-# Copyright:   (c) JNL 2024-2026
+# Copyright:   (c) JNL 2024
 # -----------------------------------------------------------------------------------------
 
 from os import listdir
@@ -19,6 +19,7 @@ import netCDF4
 import numpy as np
 import sys
 import xarray
+import json
 import configparser
 from pathlib import Path
 from pathlib import PureWindowsPath  
@@ -151,6 +152,28 @@ def get_nc_files():
                     print("missing data dimensions to be added. add more dimensions in the script")
                     
                 # Read the data from within the 
+def get_spills_from_json(url):
+
+    if url:
+        with open(url, 'r') as f:
+            data = json.load(f)
+
+        return data.get("Spill_units", [])
+    return []
+
+def get_cli_kwarg(name, default=None):
+    """
+    Read a ``--name value`` or ``--name=value`` keyword argument from sys.argv.
+
+    Returns ``default`` when the flag is absent; positional args are untouched.
+    """
+    flag = f"--{name}"
+    for i, arg in enumerate(sys.argv):
+        if arg == flag and i + 1 < len(sys.argv):
+            return sys.argv[i + 1]
+        if arg.startswith(flag + "="):
+            return arg.split("=", 1)[1]
+    return default
 
 def parse_ini(ini):
     # Read the ini file
@@ -160,69 +183,65 @@ def parse_ini(ini):
     config.read(ini)
     return config
 
-def combine_outputs(ini):
-    # Read the ini file
+def empty_current_output(ini, unit_conversion=0.000001):
+    """
+    Empty the current output folder, preserving only hp_state_out.nc
+    which is moved to a sibling 'temp' folder for the FlexTool coupling to read.
+
+    ``unit_conversion`` multiplies the storage values in the moved file (default
+    0.000001, i.e. m3 -> million m3); pass 1.0 to leave the values unchanged.
+    """
     config = parse_ini(ini)
-    # Select a fixed output path to store the final outputs
-    outpath = os.path.join(config['FILE_PATHS']["PathCombinednc"], '')
-    # Get the current output to merge with from PathOut
     currentoutput = os.path.join(config['FILE_PATHS']["PathOut"], '')
-    # Get a list of each output
-    all_nc_files = list(Path(currentoutput).rglob("*.nc"))
-    # Get the loop count variable to see if this is the first loop or not
-    loopcount = config['OPTIONS']["loopcount"]    
-    if loopcount=="false":
-            # Copy all the nc files to the final output locations
-            print(f"Moving output file to: {outpath}")
-            for f in all_nc_files:
-                #print(f)
-                shutil.move(PureWindowsPath(f), outpath)
-            return
-    # Get the initload path
-    #initpath  = config['INITITIAL CONDITIONS']["initLoad"]
-    #spath = initpath.replace('\\',' ').replace('/',' ').split()
-    #sprevious = spath[:-2]
-    #previousoutput = '/'.join(sprevious) + "/output"  
-    
-    for file in all_nc_files:
-        daily = False
-        time = True
-        var = file.name[:-3]
-        if file.name[:-3].split('_')[-1] == 'daily':
-            var = var[:-6]
-            daily = True
+    # 'temp' folder parallel to the current output folder
+    temp_dir = Path(currentoutput).parent / "temp"
+    temp_dir.mkdir(parents=True, exist_ok=True)
 
-        file_names = file.name
-        listfiles = [outpath + "/" + file_names,currentoutput + "/" + file_names]
-        if daily:  
-            with xarray.open_mfdataset(listfiles,combine = 'nested', concat_dim="time") as combined:
-                file_path = Path(f"{outpath}{file_names}")
-                # Write the file to a different name to prevent xarray errors
-                if file_path.exists():
-                    combined.to_netcdf(f"{outpath}bis{file_names}", mode='a')
-                else:
-                    combined.to_netcdf(f"{outpath}bis{file_names}")
-                
-                        # Rename the file to its original name after it has been saved
-            old_file = f"{outpath}bis{file_names}"
-            new_file = f"{outpath}{file_names}"
-            original_file = f"{currentoutput}/{file_names}"
-            #print("Cleaning the place...")
-            #print(f"    Removing old files: {outpath}{file_names}")
-            os.remove(new_file)
-            #print(f"    Removing original files: {currentoutput}/{file_names}")
-            os.remove(original_file)
-            #print(f"    Renaming output file")
-            os.rename(old_file, new_file)
+    storage_name = "hp_state_out.nc"
+    storage_src = Path(currentoutput) / storage_name
+    if storage_src.exists():
+        dest = temp_dir / storage_name
+        if dest.exists():
+            dest.unlink()
+        shutil.move(str(storage_src), str(dest))
+        print(f"Preserved {storage_name} in: {dest}")
+        scaled = scale_netcdf_data(dest, unit_conversion)
+        print(f"Scaled {scaled} in {storage_name} by {unit_conversion}")
+    else:
+        print(f"WARNING: {storage_name} not found in {currentoutput}")
+
+    for entry in Path(currentoutput).iterdir():
+        if entry.is_file():
+            entry.unlink()
         else:
-            # This means the file does not have a time dimension and can simply be replaced by the current output
-            if os.path.isfile(outpath + "/" + file_names):
-                os.remove(outpath+'/'+ file_names)
-                #print(file_names, 'has been removed from: ', outpath)   
-            shutil.move(os.path.join(currentoutput, file_names), os.path.join(outpath, file_names))
-            #print("New file has been moved to:", outpath)
+            shutil.rmtree(entry)
+    print(f"Emptied current output folder: {currentoutput}")
 
-def extract_cdf_data(url, ini):
+
+def scale_netcdf_data(path, factor):
+    """
+    Multiply every data variable in ``path`` by ``factor`` in place.
+
+    Coordinate variables (those sharing a dimension's name) are left untouched.
+    Returns the list of scaled variable names. A factor of 1.0 is a no-op.
+    """
+    if factor == 1.0:
+        return []
+    scaled = []
+    with netCDF4.Dataset(str(path), mode="r+") as ds:
+        coord_names = set(ds.dimensions.keys())
+        for name, var in ds.variables.items():
+            if name in coord_names or var.ndim < 2:
+                continue
+            var[:] = var[:] * factor
+            scaled.append(name)
+    return scaled
+
+
+
+
+#Currently unused
+def extract_cdf_data(url, ini, dam_names):
     # python extract_nc_timeseries.py data.nc --lat 60.17 --lon 24.94 --start 2005-06-01 --end 2010-12-31 --csv output.csv
     # Get the nc file targeted from the warm start
     config = parse_ini(ini)
@@ -237,58 +256,56 @@ def extract_cdf_data(url, ini):
     stepstart = stepstartimport.strftime('%Y-%m-%d')
     stependimport = datetime.strptime(config['TIME-RELATED_CONSTANTS']["StepEnd"], '%d/%m/%Y')
     stepend = stependimport.strftime('%Y-%m-%d')
-    
     # List the dam names to be extracted. the names must match the unit names from the FlexTool database.
-    # !!!! THIS NEEDS TO BE UPDATED !!!! 
-    dam_names = ["rogun"]  # example dam names, replace with actual names
-    # !!!! THIS NEEDS TO BE UPDATED !!!! 
-    
+    #dam_names = ["rogun"]  # example dam names, replace with actual names
     # Get the lat and lon from the settings file
     with DatabaseMapping(url) as db_map:
         db_map.fetch_all("entity")  # Prefetch data. May provide a speed boost for later operations.
-        for unit in db_map.find_entities(entity_class_name="unit"):
-            if unit["name"].endswith("_spill") and any(xs in unit["name"] for xs in dam_names):
-                # deal with spills.
-                print((unit["name"], unit["lat"], unit["lon"]))
-                # Get the start and end date from the settings file
-                # Call the function to extract the data and save it in a csv file
-                ## Optional input 
-                """
-                        Extract a time series for a given lat/lon point.
+        for lat_db in db_map.find_parameter_values(entity_class_name = "unit", parameter_definition_name = "lat"):
+            if lat_db["entity_byname"][0].endswith("_spill") and any(xs in lat_db["entity_byname"][0] for xs in dam_names):
+                for lon_db in db_map.find_parameter_values(entity_class_name = "unit", parameter_definition_name = "lon", entity_byname=lat_db["entity_byname"]):
+                    if lon_db["entity_byname"][0] != lat_db["entity_byname"][0]:
+                        continue  # Ensure we are matching the same entity
+                    print(f"Extracting data for {lat_db['entity_byname'][0]} at lat: {lat_db['value']}, lon: {lon_db['value']}")
+                    # deal with spills.
+                    # Get the start and end date from the settings file
+                    # Call the function to extract the data and save it in a csv file
+                    ## Optional input 
+                    """
+                            Extract a time series for a given lat/lon point.
 
-                        Parameters
-                        ----------
-                        nc_file     : str   – path to the NetCDF file
-                        lat         : float – target latitude
-                        lon         : float – target longitude
-                        year        : int   – single year to extract (mutually exclusive with date range)
-                        date_start  : str   – start date string 'YYYY-MM-DD' (use with date_end)
-                        date_end    : str   – end date string   'YYYY-MM-DD' (use with date_start)
-                        variable    : str   – variable name (auto-detected if None)
-                        plot        : bool  – show a quick matplotlib plot
-                        csv_file    : str   – path to save results as CSV (optional)
-                        """
-                for file in all_nc_files:
-                    daily = False
-                    time = True
-                    var = file.name[:-3]
-                    if file.name[:-3].split('_')[-1] == 'daily':
-                        var = var[:-6]
-                        daily = True
-                    
-                    file_names = file.name
-                    if var in selected_nc_file.split(','):
-                        listfiles = [currentoutput + file_names]
-                        print(f"Extracting data for {unit['name']} from file: {file_names}")
-                        end.extract_timeseries(
-                            nc_file=listfiles[0],
-                            lat=unit["lon"],
-                            lon=unit["lat"],
-                            date_start=stepstart,
-                            date_end=stepend,
-                            variable=var,
-                            csv_file="output.csv")
-    # set the name of the output file (atm hardcoded, but can be defined in the settings file)
+                            Parameters
+                            ----------
+                            nc_file     : str   – path to the NetCDF file
+                            lat         : float – target latitude
+                            lon         : float – target longitude
+                            year        : int   – single year to extract (mutually exclusive with date range)
+                            date_start  : str   – start date string 'YYYY-MM-DD' (use with date_end)
+                            date_end    : str   – end date string   'YYYY-MM-DD' (use with date_start)
+                            variable    : str   – variable name (auto-detected if None)
+                            plot        : bool  – show a quick matplotlib plot
+                            csv_file    : str   – path to save results as CSV (optional)
+                            """
+                    for file in all_nc_files:
+                        daily = False
+                        time = True
+                        var = file.name[:-3]
+                        if file.name[:-3].split('_')[-1] == 'daily':
+                            var = var[:-6]
+                            daily = True
+                        
+                        file_names = file.name
+                        if var in selected_nc_file.split(','):
+                            listfiles = [currentoutput + file_names]
+                            print(f"Extracting data for {lat_db['entity_byname'][0]} from file: {file_names}")
+                            end.extract_timeseries(
+                                nc_file=listfiles[0],
+                                lat=float(lon_db["value"]),
+                                lon=float(lat_db["value"]),
+                                date_start=stepstart,
+                                date_end=stepend,
+                                variable="discharge",
+                                csv_file="output.csv")
 
 def main():
     debugging = False
@@ -296,8 +313,12 @@ def main():
         print("nothing to pass")
         print("continue with the next day in CWatM")
     else:
-        extract_cdf_data(url, inifile)
-        combine_outputs(inifile)
+        dam_names = get_spills_from_json(sys.argv[3])  # Get the dam names from the JSON file passed as an argument
+        # Optional --unit_conversion kwarg: storage factor (default m3 -> million m3)
+        unit_conversion = float(get_cli_kwarg("unit_conversion", 0.000001))
+        # the output.csv is not used. It should be state, not discharge and flextool now gets it itself 
+        #extract_cdf_data(url, inifile, dam_names)
+        empty_current_output(inifile, unit_conversion=unit_conversion)
         
         # For coupling purposes, we can alter the init file that are generated by CWatM. These init file has multiple variables that can be read from the river basin
         # The output files are not re-used by CWatM, so they are as they are.

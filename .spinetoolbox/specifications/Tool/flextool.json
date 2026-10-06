@@ -31,5 +31,5 @@
         "output/*.csv"
     ],
     "cmdline_args": [],
-    "includes_main_path": "../../../../FlexTool"
+    "includes_main_path": "../../../../../FlexTool"
 }
