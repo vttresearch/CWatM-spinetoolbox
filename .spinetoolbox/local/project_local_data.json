@@ -106,7 +106,7 @@
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
                                     "calibration": false,
-                                    "coupling": true,
+                                    "coupling": false,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
@@ -135,12 +135,14 @@
                             "db_url@Data Store": {
                                 "scenario_filter": {
                                     "calibration": true,
+                                    "coupling": true,
                                     "cwatm_template_30arcmin": true
                                 },
                                 "alternative_filter": {
                                     "Base": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
+                                    "coupling": true,
                                     "output_cwatm": true
                                 }
                             }
@@ -201,7 +203,7 @@
                         "known_filters": {}
                     }
                 },
-                "cwatm": {
+                "Flextool roll (1)": {
                     "filter_settings": {
                         "known_filters": {}
                     }
@@ -248,7 +250,7 @@
                 }
             },
             "flextool_db": {
-                "process_to_flexTool": {
+                "Flextool": {
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool_db": {
@@ -260,7 +262,7 @@
                         }
                     }
                 },
-                "Flextool": {
+                "Flextool roll (1)": {
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool_db": {
@@ -275,6 +277,32 @@
             },
             "Flextool": {
                 "open_summary": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Time Constants": {
+                "Reset rolling": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Reset rolling": {
+                "cwatm_db": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                },
+                "flextool_db": {
+                    "filter_settings": {
+                        "known_filters": {}
+                    }
+                }
+            },
+            "Flextool roll (1)": {
+                "cwatm": {
                     "filter_settings": {
                         "known_filters": {}
                     }
@@ -339,6 +367,11 @@
                 "password": ""
             }
         },
-        "open_summary": {}
+        "open_summary": {},
+        "Time Constants": {
+            "db_credentials": {}
+        },
+        "Reset rolling": {},
+        "Flextool roll (1)": {}
     }
 }

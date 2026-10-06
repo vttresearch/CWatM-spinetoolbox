@@ -151,6 +151,22 @@
                 "use_jupyter_console": false,
                 "executable": "C:/Users/JLJEAN/AppData/Local/miniconda3/envs/flextool/python.exe"
             }
+        },
+        "reset rolling": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": ""
+            }
+        },
+        "Flextool rolling": {
+            "execution_settings": {
+                "kernel_spec_name": "",
+                "env": "",
+                "use_jupyter_console": false,
+                "executable": "C:\\Git\\flextool_newv2\\.venv\\Scripts\\python.exe"
+            }
         }
     }
 }

@@ -5,9 +5,7 @@
         "export_to_ini_calib.py"
     ],
     "description": "",
-    "inputfiles": [
-        "init/*.nc"
-    ],
+    "inputfiles": [],
     "inputfiles_opt": [],
     "outputfiles": [
         "*.ini",

@@ -87,6 +87,16 @@
                     "type": "path",
                     "relative": true,
                     "path": ".spinetoolbox/specifications/Tool/open_summary.json"
+                },
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/specifications/Tool/reset_rolling.json"
+                },
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/specifications/Tool/flextool_rolling.json"
                 }
             ]
         },
@@ -500,24 +510,6 @@
                 }
             },
             {
-                "name": "from export_to_ini_cwatm to cwatm",
-                "from": [
-                    "export_to_ini_cwatm",
-                    "right"
-                ],
-                "to": [
-                    "cwatm",
-                    "left"
-                ],
-                "filter_settings": {
-                    "auto_online": true,
-                    "enabled_filter_types": {
-                        "alternative_filter": false,
-                        "scenario_filter": true
-                    }
-                }
-            },
-            {
                 "name": "from process_to_flexTool to loop_next_day",
                 "from": [
                     "process_to_flexTool",
@@ -572,24 +564,6 @@
                 }
             },
             {
-                "name": "from flextool_db to process_to_flexTool",
-                "from": [
-                    "flextool_db",
-                    "bottom"
-                ],
-                "to": [
-                    "process_to_flexTool",
-                    "left"
-                ],
-                "filter_settings": {
-                    "auto_online": true,
-                    "enabled_filter_types": {
-                        "alternative_filter": false,
-                        "scenario_filter": true
-                    }
-                }
-            },
-            {
                 "name": "from flextool_db to Flextool",
                 "from": [
                     "flextool_db",
@@ -615,6 +589,114 @@
                 ],
                 "to": [
                     "open_summary",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from Time Constants to Reset rolling",
+                "from": [
+                    "Time Constants",
+                    "right"
+                ],
+                "to": [
+                    "Reset rolling",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from Reset rolling to cwatm_db",
+                "from": [
+                    "Reset rolling",
+                    "right"
+                ],
+                "to": [
+                    "cwatm_db",
+                    "bottom"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from Reset rolling to flextool_db",
+                "from": [
+                    "Reset rolling",
+                    "right"
+                ],
+                "to": [
+                    "flextool_db",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from export_to_ini_cwatm to Flextool roll (1)",
+                "from": [
+                    "export_to_ini_cwatm",
+                    "right"
+                ],
+                "to": [
+                    "Flextool roll (1)",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from Flextool roll (1) to cwatm",
+                "from": [
+                    "Flextool roll (1)",
+                    "right"
+                ],
+                "to": [
+                    "cwatm",
+                    "left"
+                ],
+                "filter_settings": {
+                    "auto_online": true,
+                    "enabled_filter_types": {
+                        "alternative_filter": false,
+                        "scenario_filter": true
+                    }
+                }
+            },
+            {
+                "name": "from flextool_db to Flextool roll (1)",
+                "from": [
+                    "flextool_db",
+                    "bottom"
+                ],
+                "to": [
+                    "Flextool roll (1)",
                     "left"
                 ],
                 "filter_settings": {
@@ -672,8 +754,8 @@
         "cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 460.41251513538725,
-            "y": 176.33654882580694,
+            "x": 548.5357073354684,
+            "y": 227.85472272739284,
             "specification": "CWatM",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -958,8 +1040,8 @@
         "process_to_flexTool": {
             "type": "Tool",
             "description": "",
-            "x": 669.0477797111948,
-            "y": 183.96607737378287,
+            "x": 683.9609353142855,
+            "y": 246.330182623071,
             "specification": "process_to_flexTool",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -974,8 +1056,8 @@
         "data_store_loop": {
             "type": "Data Store",
             "description": "",
-            "x": 172.19665870573886,
-            "y": 311.6227448063343,
+            "x": 187.10981430882953,
+            "y": 373.9868500556224,
             "url": {
                 "dialect": "sqlite",
                 "host": "",
@@ -1007,8 +1089,8 @@
         "export_to_ini_cwatm": {
             "type": "Tool",
             "description": "",
-            "x": 280.6680850841672,
-            "y": 172.278656681902,
+            "x": 295.58124068725783,
+            "y": 234.64276193119017,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1031,8 +1113,8 @@
         "export_to_ini_calib_Cwatm_stdalone": {
             "type": "Tool",
             "description": "",
-            "x": 458.01427428462875,
-            "y": -126.8051245575976,
+            "x": 426.3210748990678,
+            "y": -106.43092495259413,
             "specification": "export_to_ini_calib",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1075,8 +1157,8 @@
         "loop_next_day": {
             "type": "Tool",
             "description": "",
-            "x": 354.1289298872614,
-            "y": 305.1105268160167,
+            "x": 369.04208549035206,
+            "y": 367.47463206530483,
             "specification": "loop_next_day",
             "execute_in_work": true,
             "cmd_line_args": [
@@ -1099,8 +1181,8 @@
         "nc file ini": {
             "type": "Data Connection",
             "description": "",
-            "x": 299.69586617524783,
-            "y": -18.584398899717026,
+            "x": 274.3463837772073,
+            "y": -15.387154853915698,
             "file_references": [],
             "file_patterns": [],
             "directory_references": [],
@@ -1110,7 +1192,7 @@
             "type": "Tool",
             "description": "",
             "x": 1009.8534238009473,
-            "y": 226.04277218800271,
+            "y": 224.68703076953994,
             "specification": "Flextool",
             "execute_in_work": true,
             "cmd_line_args": [],
@@ -1143,6 +1225,82 @@
             "execute_in_work": true,
             "cmd_line_args": [],
             "kill_completed_processes": false,
+            "log_process_output": false
+        },
+        "Time Constants": {
+            "type": "Data Connection",
+            "description": "",
+            "x": -78.63300227084157,
+            "y": 134.2184004278158,
+            "file_references": [
+                {
+                    "type": "path",
+                    "relative": true,
+                    "path": ".spinetoolbox/Data/time_params.txt"
+                }
+            ],
+            "file_patterns": [],
+            "directory_references": [],
+            "db_references": []
+        },
+        "Reset rolling": {
+            "type": "Tool",
+            "description": "",
+            "x": 70.63541040873253,
+            "y": 131.42870917760825,
+            "specification": "reset rolling",
+            "execute_in_work": true,
+            "cmd_line_args": [
+                {
+                    "type": "resource",
+                    "arg": "<project>/.spinetoolbox/Data/time_params.txt"
+                },
+                {
+                    "type": "resource",
+                    "arg": "db_url@cwatm_db"
+                },
+                {
+                    "type": "resource",
+                    "arg": "db_url@flextool_db"
+                }
+            ],
+            "kill_completed_processes": true,
+            "log_process_output": false
+        },
+        "Flextool roll (1)": {
+            "type": "Tool",
+            "description": "",
+            "x": 424.3470639788518,
+            "y": 220.9858512094341,
+            "specification": "Flextool rolling",
+            "execute_in_work": true,
+            "cmd_line_args": [
+                {
+                    "type": "resource",
+                    "arg": "db_url@flextool_db"
+                },
+                {
+                    "type": "literal",
+                    "arg": "--results_dir"
+                },
+                {
+                    "type": "resource",
+                    "arg": "C:\\Git\\CA_model\\flextool_results"
+                },
+                {
+                    "type": "literal",
+                    "arg": "--ini"
+                },
+                {
+                    "type": "resource",
+                    "arg": "cwatm_input.ini"
+                },
+                {
+                    "type": "literal",
+                    "arg": "--restart"
+                }
+            ],
+            "kill_completed_processes": true,
             "log_process_output": false
         }
     }
