@@ -1,0 +1,18 @@
+{
+    "name": "Flextool rolling",
+    "tooltype": "python",
+    "includes": [
+        "run_flextool_coupled.py",
+        "coupling_datetime.py"
+    ],
+    "description": "",
+    "inputfiles": [
+        "cwatm_input.ini"
+    ],
+    "inputfiles_opt": [],
+    "outputfiles": [
+        "cwatm_input.ini"
+    ],
+    "cmdline_args": [],
+    "includes_main_path": "../../bin"
+}

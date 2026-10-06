@@ -1,0 +1,13 @@
+{
+    "name": "reset rolling",
+    "tooltype": "python",
+    "includes": [
+        "reset_rolling.py"
+    ],
+    "description": "",
+    "inputfiles": [],
+    "inputfiles_opt": [],
+    "outputfiles": [],
+    "cmdline_args": [],
+    "includes_main_path": "../../bin"
+}

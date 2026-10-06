@@ -1,0 +1,17 @@
+# Time parameters for CWatM/FlexTool rolling reset
+# Format: key = value (dd/mm/yyyy for dates, ND or NH for RollFlexTool)
+# These will be written to the CWatM Spine database
+# RollFlexTool is also converted to hours and written to the FlexTool DB
+# as rolling_solve_jump
+#
+# Usage: python reset_rolling.py time_params.txt cwatm.sqlite flextool.sqlite
+
+StepStart = 2050-01-1T00:00:00
+StepEnd = 2050-12-31T00:00:00
+SpinUp = 2050-01-1T00:00:00
+StepInit = 2051-01-8T00:00:00
+StepFlexTool = 2050-02-01T00:00:00
+RollFlexTool = 7D
+PathOut = ../Data/output_gdfl_126
+loopcount = false
+

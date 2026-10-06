@@ -1,0 +1,14 @@
+# variable: Channel discharge
+# units: m3/s
+# lat (requested): 2.0939938077932596,lat (actual): 37.458333
+# lon (requested): 0.2923114310164786,lon (actual): 68.375000
+# period: 2050-01-01 to 2050-01-08
+timestamp,discharge [m3/s]
+2050-01-01 00:00:00,nan
+2050-01-02 00:00:00,nan
+2050-01-03 00:00:00,nan
+2050-01-04 00:00:00,nan
+2050-01-05 00:00:00,nan
+2050-01-06 00:00:00,nan
+2050-01-07 00:00:00,nan
+2050-01-08 00:00:00,nan

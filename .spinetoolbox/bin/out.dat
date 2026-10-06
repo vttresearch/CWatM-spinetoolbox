@@ -1,0 +1,7 @@
+sqlite:///C:\Users\aetart\Documents\Flextool_central_asia\CWatM-spinetoolbox\.spinetoolbox\items\data_store\cwatmdb_central_asia (1).sqlite?spinedbfilter=cfg%3Aexecution%3A%7B%22execution_item%22%3A+%22loop_next_day%22%2C+%22scenarios%22%3A+%5B%22SSP126_FullVakhsh-coupling%22%2C+%22TJ_system_rolling_future%22%5D%2C+%22timestamp%22%3A+%222026-09-11T14%3A37%3A24%22%7D
+StepStart;Coupling 
+SpinUp;Coupling 
+StepEnd;Coupling 
+load_initial;31_5min_gfdl-126 - Full Vakhsh 
+loopcount;Coupling 
+initLoad;Coupling 

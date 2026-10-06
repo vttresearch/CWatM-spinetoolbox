@@ -1,0 +1,13 @@
+{
+    "name": "read_dispatch",
+    "tooltype": "python",
+    "includes": [
+        "nc_to_csv.py"
+    ],
+    "description": "",
+    "inputfiles": [],
+    "inputfiles_opt": [],
+    "outputfiles": [],
+    "cmdline_args": [],
+    "includes_main_path": "../../bin"
+}
