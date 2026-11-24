@@ -12,7 +12,7 @@ New variables are introduced in the ini file used by CWatM and are readily avail
 | OPTIONS                | loopcount      | This is a boolean value that starts with the value FALSE for every new iteration |
 | OPTIONS                | looptoolbox    | Boolean to tell if you are running CWatM in a loop (TRUE) or not (FALSE). |
 | TIME-RELATED_CONSTANTS | RollFlexTool   | Time duration of the CWatM model (D, M, Y)                   |
-| TIME-RELATED_CONSTANTS | StepFlexTool   | The date for the end of the simulation                       |
+| TIME-RELATED_CONSTANTS | StepFlexTool   | The date for the end of the simulation. This date will be used to stop the simulation time |
 
 These variables are already defined in the [CWatM template](../.spinetoolbox/Data/basic_model.json) and may be changed directly after importing the template.
 
@@ -23,7 +23,126 @@ Some of the existing variables from CWatM need to be modified to access init val
 | entity name            | Parameter name | Role                                                         |
 | ---------------------- | -------------- | ------------------------------------------------------------ |
 | TIME-RELATED_CONSTANTS | SpinUp         | Set the value to the same value as StepStart. This will for the model to do the warm start correctly |
-| TIME-RELATED_CONSTANTS | StepEnd        | Can be set to any value, it will be written over by the workflow |
+| TIME-RELATED_CONSTANTS | StepEnd        | Can be set to any value, it will be written over by the workflow. This date will be used for the rolling time horizon and when to define the time zone. This date is automatically recalculated based on the StepStart and the RollFlexToll values. |
 | TIME-RELATED_CONSTANTS | StepStart      | Start of the model, same function than the regular CWatM model |
 | INITITIAL CONDITIONS   | StepInit       | While CWatM allow duration or other values, when using it in coupling mode with FlexTool, it must be set to an individual datetime. For the first time, set it to StepStart + RollFlexTool value. In consecutive run, the value is automatically updated |
 | INITITIAL CONDITIONS   | initLoad       | Same function as CWatM model. It is overwritten automatically in the workflow when needed. first value must be of the form ./<initpath and name> |
+
+# Modifications made in CWatM
+
+In order to create the integration, CWatM had to be modified to re-calculate the reservoirs value. The following file was modified:
+
+- .\cwatm\hydrological_modules\lakes_reservoirs.py
+
+First the initialisation of the file introduces the coupling to CWatM
+
+```python
+    # ---- Option 3: Hydropower coupling with energy model (FlexTool) ----
+        self.var.useHPCoupling = False
+        if 'useHydropowerCoupling' in binding:
+            if returnBool('useHydropowerCoupling'):
+                self.var.useHPCoupling = True        
+    			from cwatm.coupling.hp_coupling_interface import HydropowerCouplingInterface
+
+                state_out = cbinding('hp_state_out_path')
+                dispatch_in = cbinding('hp_dispatch_in_path')
+                freq = int(float(cbinding('hp_coupling_freq_days')))
+
+                # Number of HP reservoirs: all reservoirs (types 2,3)
+                n_hp = int(np.sum((self.var.waterBodyTypC == 2) | (self.var.waterBodyTypC == 3)))
+                self.var.hp_mask = (self.var.waterBodyTypC == 2) | (self.var.waterBodyTypC == 3)
+
+                if n_hp == 0:
+                    # If no type-2/3 reservoirs, use all reservoirs
+                    n_hp = int(np.sum(self.var.waterBodyTypC > 1))
+                    self.var.hp_mask = self.var.waterBodyTypC > 1
+
+                # Reservoir identity (waterBodyID + outlet-cell lat/lon) in the
+                # same order the dispatch/state `reservoir` axis is written, so
+                # the coupling matches by identity instead of column position.
+                hp_idx = np.nonzero(self.var.hp_mask)[0]
+                hp_ids = self.var.waterBodyID_C[hp_idx].astype(np.int64)
+                allpoints = np.where(maskinfo["mask"] == False)
+                outlet_cells = self.var.decompress_LR[hp_idx]
+                hp_lat = (maskmapAttr['y']
+                          - allpoints[0][outlet_cells] * maskmapAttr['cell']
+                          - maskmapAttr['cell'] / 2)
+                hp_lon = (allpoints[1][outlet_cells] * maskmapAttr['cell']
+                          + maskmapAttr['x'] + maskmapAttr['cell'] / 2)
+
+                self.var._hp_interface = HydropowerCouplingInterface(
+                    state_out_path=state_out,
+                    dispatch_in_path=dispatch_in,
+                    coupling_freq_days=freq,
+                    n_reservoirs=n_hp,
+                    reservoir_ids=hp_ids,
+                    reservoir_lat=hp_lat,
+                    reservoir_lon=hp_lon,
+                )
+                self.var._hp_step = 0
+
+                # Diagnostic output variables (compressed LR size)
+                n = self.var.waterBodyTypC.shape[0]
+                self.var.hp_turbine_flow = np.zeros(n, dtype=np.float64)
+                self.var.hp_spillage_m3s = np.zeros(n, dtype=np.float64)
+                self.var.hp_dispatch_active = np.zeros(n, dtype=np.int8)
+
+                if Flags['loud']:
+                    print(f"  INFO: Hydropower coupling (Option 3) activated. "
+                          f"{n_hp} HP reservoirs, exchange every {freq} day(s).")`
+```
+
+Second, the dynamics needs to be updated within the loop. This is done as part of the `def dynamic_inloop_reservoirs` section where the following code has been introduced
+
+```python
+        # ---- Option 3: Override outflow with energy model dispatch ----
+        if self.var.useHPCoupling:
+            from cwatm.management_modules.globals import dateVar as _dateVar
+            iface = self.var._hp_interface
+            mask = self.var.hp_mask
+            date = _dateVar["currDate"]
+            print("date", date)
+            # Write state for energy model at coupling frequency
+            if NoRoutingExecuted == 0 and iface.should_write_state(self.var._hp_step):
+                # Linear head approximation from storage fraction
+                sf = np.where(self.var.resVolumeC > 0,
+                              self.var.reservoirStorageM3C / self.var.resVolumeC, 0.0)
+                head_approx = 10.0 + np.clip(sf, 0.0, 1.0) * 40.0
+
+                try:
+                    iface.write_state(
+                        date=date,
+                        inflow_m3s=np.where(mask, inflowC / self.var.dtRouting, 0.0)[mask],
+                        storage_m3=self.var.reservoirStorageM3C[mask],
+                        head_m=head_approx[mask],
+                        storage_capacity_m3=self.var.resVolumeC[mask],
+                    )
+                except Exception as e:
+                    if Flags['loud']:
+                        print(f"  WARNING: hp_coupling write_state failed: {e}")
+
+            # Read dispatch from energy model
+            Q_turbine, Q_spill = iface.read_dispatch(date)
+            print("Q_turbine", Q_turbine)
+            print("Q_spill", Q_spill)
+            if Q_turbine is not None:
+                print("reservoir_outflow",reservoirOutflow)
+                # Override outflow for HP reservoirs with dispatch values
+                dispatch_outflow = np.zeros_like(reservoirOutflow)
+                dispatch_outflow[mask] = Q_turbine + Q_spill
+                reservoirOutflow = np.where(mask, dispatch_outflow, reservoirOutflow)
+                print("reservoir_outflow_after",reservoirOutflow)
+                # Track diagnostics
+                self.var.hp_turbine_flow[:] = 0.0
+                self.var.hp_turbine_flow[mask] = Q_turbine
+                self.var.hp_spillage_m3s[:] = 0.0
+                self.var.hp_spillage_m3s[mask] = Q_spill
+                self.var.hp_dispatch_active = np.where(mask, 1, 0).astype(np.int8)
+            else:
+                # No dispatch available - use CWatM zone-based logic
+                self.var.hp_dispatch_active[:] = 0
+
+            if NoRoutingExecuted == 0:
+                self.var._hp_step += 1
+        # ---- End Option 3 ----
+```

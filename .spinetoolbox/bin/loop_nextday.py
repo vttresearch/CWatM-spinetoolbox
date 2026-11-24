@@ -14,8 +14,8 @@
 # -----------------------------------------------------------------------------------------
 
 import configparser
-from CWatM_Module.management_modules.globals import *
-from CWatM_Module.management_modules.messages import *
+from CWatM.cwatm.management_modules.globals import *
+from CWatM.cwatm.management_modules.messages import *
 import difflib  # to check the closest word in settingsfile, if an error occurs
 import datetime
 from datetime import timedelta

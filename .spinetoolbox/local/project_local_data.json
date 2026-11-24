@@ -45,16 +45,37 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": true,
+                                    "SSP126_FullVakhsh": true,
+                                    "SSP126_FullVakhsh-coupling": true,
+                                    "SSP126_gdfl": true,
                                     "calibration": true,
-                                    "coupling": true,
-                                    "cwatm_template_30arcmin": true
+                                    "cwatm_template_30arcmin": true,
+                                    "standalone": true
                                 },
                                 "alternative_filter": {
+                                    "31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "33_5min_gfdl-585- Full Vakhsh": true,
+                                    "34_5min_ipsl-126- Full Vakhsh": true,
+                                    "35_5min_ipsl-370- Full Vakhsh": true,
+                                    "36_5min_ipsl-585- Full Vakhsh": true,
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "coupling": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "glaciers": true,
+                                    "output_31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "output_32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "output_33_5min_gfdl-585- Full Vakhsh": true,
+                                    "output_34_5min_ipsl-126- Full Vakhsh": true,
+                                    "output_35_5min_ipsl-370- Full Vakhsh": true,
+                                    "output_36_5min_ipsl-585- Full Vakhsh": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true,
+                                    "output_glaciers": true,
+                                    "standalone_time": true
                                 }
                             }
                         }
@@ -65,16 +86,37 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_FullVakhsh": false,
+                                    "SSP126_FullVakhsh-coupling": false,
+                                    "SSP126_gdfl": false,
                                     "calibration": true,
-                                    "coupling": false,
-                                    "cwatm_template_30arcmin": false
+                                    "cwatm_template_30arcmin": false,
+                                    "standalone": false
                                 },
                                 "alternative_filter": {
+                                    "31_5min_gfdl-126 - Full Vakhsh": false,
+                                    "32_5min_gfdl-370 - Full Vakhsh": false,
+                                    "33_5min_gfdl-585- Full Vakhsh": false,
+                                    "34_5min_ipsl-126- Full Vakhsh": false,
+                                    "35_5min_ipsl-370- Full Vakhsh": false,
+                                    "36_5min_ipsl-585- Full Vakhsh": false,
                                     "Base": false,
+                                    "Coupling": false,
                                     "calibration_ini": true,
                                     "calibration_run": false,
-                                    "coupling": false,
-                                    "output_cwatm": false
+                                    "gdfl-126": false,
+                                    "glaciers": false,
+                                    "output_31_5min_gfdl-126 - Full Vakhsh": false,
+                                    "output_32_5min_gfdl-370 - Full Vakhsh": false,
+                                    "output_33_5min_gfdl-585- Full Vakhsh": false,
+                                    "output_34_5min_ipsl-126- Full Vakhsh": false,
+                                    "output_35_5min_ipsl-370- Full Vakhsh": false,
+                                    "output_36_5min_ipsl-585- Full Vakhsh": false,
+                                    "output_cwatm": false,
+                                    "output_gdfl-126": false,
+                                    "output_glaciers": false,
+                                    "standalone_time": false
                                 }
                             }
                         }
@@ -85,16 +127,37 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_FullVakhsh": false,
+                                    "SSP126_FullVakhsh-coupling": true,
+                                    "SSP126_gdfl": false,
                                     "calibration": false,
-                                    "coupling": true,
-                                    "cwatm_template_30arcmin": false
+                                    "cwatm_template_30arcmin": false,
+                                    "standalone": false
                                 },
                                 "alternative_filter": {
+                                    "31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "33_5min_gfdl-585- Full Vakhsh": true,
+                                    "34_5min_ipsl-126- Full Vakhsh": true,
+                                    "35_5min_ipsl-370- Full Vakhsh": true,
+                                    "36_5min_ipsl-585- Full Vakhsh": true,
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "coupling": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "glaciers": true,
+                                    "output_31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "output_32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "output_33_5min_gfdl-585- Full Vakhsh": true,
+                                    "output_34_5min_ipsl-126- Full Vakhsh": true,
+                                    "output_35_5min_ipsl-370- Full Vakhsh": true,
+                                    "output_36_5min_ipsl-585- Full Vakhsh": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true,
+                                    "output_glaciers": true,
+                                    "standalone_time": true
                                 }
                             }
                         }
@@ -105,16 +168,37 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_FullVakhsh": true,
+                                    "SSP126_FullVakhsh-coupling": false,
+                                    "SSP126_gdfl": false,
                                     "calibration": false,
-                                    "coupling": true,
-                                    "cwatm_template_30arcmin": false
+                                    "cwatm_template_30arcmin": false,
+                                    "standalone": false
                                 },
                                 "alternative_filter": {
+                                    "31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "33_5min_gfdl-585- Full Vakhsh": true,
+                                    "34_5min_ipsl-126- Full Vakhsh": true,
+                                    "35_5min_ipsl-370- Full Vakhsh": true,
+                                    "36_5min_ipsl-585- Full Vakhsh": true,
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "coupling": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "glaciers": true,
+                                    "output_31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "output_32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "output_33_5min_gfdl-585- Full Vakhsh": true,
+                                    "output_34_5min_ipsl-126- Full Vakhsh": true,
+                                    "output_35_5min_ipsl-370- Full Vakhsh": true,
+                                    "output_36_5min_ipsl-585- Full Vakhsh": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true,
+                                    "output_glaciers": true,
+                                    "standalone_time": true
                                 }
                             }
                         }
@@ -125,16 +209,37 @@
                         "known_filters": {
                             "db_url@cwatm_db": {
                                 "scenario_filter": {
+                                    "Coupling": false,
+                                    "SSP126_FullVakhsh": false,
+                                    "SSP126_FullVakhsh-coupling": true,
+                                    "SSP126_gdfl": false,
                                     "calibration": false,
-                                    "coupling": true,
-                                    "cwatm_template_30arcmin": false
+                                    "cwatm_template_30arcmin": false,
+                                    "standalone": false
                                 },
                                 "alternative_filter": {
+                                    "31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "33_5min_gfdl-585- Full Vakhsh": true,
+                                    "34_5min_ipsl-126- Full Vakhsh": true,
+                                    "35_5min_ipsl-370- Full Vakhsh": true,
+                                    "36_5min_ipsl-585- Full Vakhsh": true,
                                     "Base": true,
+                                    "Coupling": true,
                                     "calibration_ini": true,
                                     "calibration_run": true,
-                                    "coupling": true,
-                                    "output_cwatm": true
+                                    "gdfl-126": true,
+                                    "glaciers": true,
+                                    "output_31_5min_gfdl-126 - Full Vakhsh": true,
+                                    "output_32_5min_gfdl-370 - Full Vakhsh": true,
+                                    "output_33_5min_gfdl-585- Full Vakhsh": true,
+                                    "output_34_5min_ipsl-126- Full Vakhsh": true,
+                                    "output_35_5min_ipsl-370- Full Vakhsh": true,
+                                    "output_36_5min_ipsl-585- Full Vakhsh": true,
+                                    "output_cwatm": true,
+                                    "output_gdfl-126": true,
+                                    "output_glaciers": true,
+                                    "standalone_time": true
                                 }
                             }
                         }
@@ -296,9 +401,27 @@
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool": {
-                                "scenario_filter": {},
+                                "scenario_filter": {
+                                    "TJ_system": false,
+                                    "TJ_system_rolling": false,
+                                    "TJ_system_rolling_future": true,
+                                    "cascades": false,
+                                    "chirchik_cascade": false,
+                                    "chirchik_uzbek_tpps": false
+                                },
                                 "alternative_filter": {
-                                    "Base": true
+                                    "base": true,
+                                    "chirchik": true,
+                                    "connection_UZ_TJ": true,
+                                    "dushanbePlants": true,
+                                    "future_volumes": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "rolling": true,
+                                    "storage_solve": true,
+                                    "uzThermalPlants": true,
+                                    "vaksh": true
                                 }
                             }
                         }
@@ -308,9 +431,27 @@
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool": {
-                                "scenario_filter": {},
+                                "scenario_filter": {
+                                    "TJ_system": false,
+                                    "TJ_system_rolling": false,
+                                    "TJ_system_rolling_future": true,
+                                    "cascades": false,
+                                    "chirchik_cascade": false,
+                                    "chirchik_uzbek_tpps": false
+                                },
                                 "alternative_filter": {
-                                    "Base": true
+                                    "base": true,
+                                    "chirchik": true,
+                                    "connection_UZ_TJ": true,
+                                    "dushanbePlants": true,
+                                    "future_volumes": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "rolling": true,
+                                    "storage_solve": true,
+                                    "uzThermalPlants": true,
+                                    "vaksh": true
                                 }
                             }
                         }
@@ -320,9 +461,27 @@
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool": {
-                                "scenario_filter": {},
+                                "scenario_filter": {
+                                    "TJ_system": false,
+                                    "TJ_system_rolling": false,
+                                    "TJ_system_rolling_future": true,
+                                    "cascades": false,
+                                    "chirchik_cascade": false,
+                                    "chirchik_uzbek_tpps": false
+                                },
                                 "alternative_filter": {
-                                    "Base": true
+                                    "base": true,
+                                    "chirchik": true,
+                                    "connection_UZ_TJ": true,
+                                    "dushanbePlants": true,
+                                    "future_volumes": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "rolling": true,
+                                    "storage_solve": true,
+                                    "uzThermalPlants": true,
+                                    "vaksh": true
                                 }
                             }
                         }
@@ -332,9 +491,27 @@
                     "filter_settings": {
                         "known_filters": {
                             "db_url@flextool": {
-                                "scenario_filter": {},
+                                "scenario_filter": {
+                                    "TJ_system": false,
+                                    "TJ_system_rolling": false,
+                                    "TJ_system_rolling_future": true,
+                                    "cascades": false,
+                                    "chirchik_cascade": false,
+                                    "chirchik_uzbek_tpps": false
+                                },
                                 "alternative_filter": {
-                                    "Base": true
+                                    "base": true,
+                                    "chirchik": true,
+                                    "connection_UZ_TJ": true,
+                                    "dushanbePlants": true,
+                                    "future_volumes": true,
+                                    "init": true,
+                                    "init_2day-test": true,
+                                    "init_5week-invest": true,
+                                    "rolling": true,
+                                    "storage_solve": true,
+                                    "uzThermalPlants": true,
+                                    "vaksh": true
                                 }
                             }
                         }
@@ -442,6 +619,9 @@
         "export_to_ini_calib_Cwatm_stdalone": {},
         "CWatM_standalone": {},
         "loop_next_day": {},
+        "nc file ini": {
+            "db_credentials": {}
+        },
         "flextool": {
             "url": {
                 "username": "",

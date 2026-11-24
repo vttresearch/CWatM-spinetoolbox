@@ -24,8 +24,8 @@ import configparser
 from pathlib import Path
 from pathlib import PureWindowsPath  
 import shutil
-from CWatM_Module.management_modules.messages import *
-from CWatM_Module.management_modules.globals import *
+from CWatM.cwatm.management_modules.messages import *
+from CWatM.cwatm.management_modules.globals import *
 import difflib  # to check the closest word in settingsfile, if an error occurs
 import extract_netcdf_data as end
 from spinedb_api import DatabaseMapping

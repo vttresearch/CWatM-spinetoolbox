@@ -56,6 +56,15 @@ class lakes_reservoirs(object):
     Maniak hydraulics textbook, p.331ff
     Aigner (2008) for parabolic cross-section relationships
 
+
+
+
+
+
+
+
+
+
     **Global variables**
     ===================================  ==========    ======================================================================  =====
     Variable [self.var]                  Type          Description                                                             Unit 
@@ -83,13 +92,13 @@ class lakes_reservoirs(object):
     waterBodyOutC                        Array         compressed map biggest outlet of each lake/reservoir                    --   
     resYear                              Array         Settings waterBodyYear, with first operating year of reservoirs         map  
     resYearC                             Array         Compressed map of resYear                                               --   
-    resVolumeC                           Array         compressed map of reservoir volume                                      Milli
+    resVolumeC                           Array         compressed map of reservoir volume                                      Mm3  
     waterBodyTyp                         Array         Settings, waterBodyTyp, with waterbody type 1-4                         map  
     waterBodyTypC                        Array         water body types 3 reservoirs and lakes (used as reservoirs but before  --   
     lakeArea                             Array         area of each lake/reservoir                                             m2   
     lakeAreaC                            Array         compressed map of the area of each lake/reservoir                       m2   
-    lakeDis0                             Array         compressed map average discharge at the outlet of a lake/reservoir      m3/s 
-    lakeDis0C                            Array         average discharge at the outlet of a lake/reservoir                     m3/s 
+    lakeDis0                             Array         compressed map average discharge at the outlet of a lake/reservoir      m3 s-
+    lakeDis0C                            Array         average discharge at the outlet of a lake/reservoir                     m3 s-
     lakeAC                               Array         compressed map of parameter of channel width, gravity and weir coeffic  --   
     reservoir_transfers_net_M3C          Array         Net transfer from one point to the other                                m3   
     reservoir_transfers_net_M3           Array         net reservoir transfers, after exports, transfers, and imports          m3   
@@ -119,18 +128,18 @@ class lakes_reservoirs(object):
     waterBodyBuffer_wwt                  Array         Create a buffer around water bodies as command areas for lakes and res  m2   
     lakeFactor                           Array         factor for the Modified Puls approach to calculate retention of the la  --   
     lakeFactorSqr                        Array         square root factor for the Modified Puls approach to calculate retenti  --   
-    lakeInflowOldC                       Array         inflow to the lake from previous days                                   m/3  
+    lakeInflowOldC                       Array         inflow to the lake from previous days                                   m3   
     lakeLevelC                           Array         compressed map of lake level                                            m    
-    lakeOutflowC                         Array         compressed map of lake outflow                                          m3/s 
+    lakeOutflowC                         Array         compressed map of lake outflow                                          m3 s-
     conLimitC                            Array         Reservoir calculation: conservativeStorageLimit                         --   
     normLimitC                           Array         Reservoir calculation: normalStorageLimit                               --   
     floodLimitC                          Array         Reservoir calculation:                                                  --   
-    minQC                                Array         Reservoir calculation:                                                  m3/s 
-    normQC                               Array         Reservoir calculation:                                                  m3/s 
-    nondmgQC                             Array         Reservoir calculation:                                                  m3/s 
+    minQC                                Array         Reservoir calculation:                                                  m3 s-
+    normQC                               Array         Reservoir calculation:                                                  m3 s-
+    nondmgQC                             Array         Reservoir calculation:                                                  m3 s-
     adjust_Normal_FloodC                 Array         Reservoir calculation:                                                  --   
     norm_floodLimitC                     Array         Reservoir calculation:                                                  --   
-    deltaO                               Array         Reservoir calculation:                                                  m3/s 
+    deltaO                               Array         Reservoir calculation:                                                  m3 s-
     deltaLN                              Array         Reservoir calculation:                                                  --   
     deltaLF                              Array         Reservoir calculation:                                                  --   
     deltaNFL                             Array         Reservoir calculation:                                                  --   
@@ -153,7 +162,7 @@ class lakes_reservoirs(object):
     resStorage                           Array         Storage volume of reservoirs                                            m3   
     DtSec                                Array         number of seconds per timestep (default = 86400)                        s    
     MtoM3                                Array         Coefficient to change units                                             --   
-    InvDtSec                             Array         inversere of seconds per timestep (default 1/86400)                     1/s  
+    InvDtSec                             Array         inversere of seconds per timestep (default 1/86400)                     1 s-1
     waterBodyID                          Array         lakes/reservoirs map with a single ID for each lake/reservoir           --   
     UpArea1                              Array         upstream area of a grid cell                                            m2   
     dirupID_LR                           Array         index river upstream lake/reservoir                                     --   
@@ -162,19 +171,19 @@ class lakes_reservoirs(object):
     evapWaterBodyC                       Array         Compressed version of EvapWaterBodyM                                    m    
     sumLakeEvapWaterBodyC                Array                                                                                 --   
     noRoutingSteps                       Number        Number of routing step - how often the subroutine is run during a day   --   
-    sumResEvapWaterBodyC                 Array                                                                                 --   
-    discharge                            Array         Channel discharge                                                       m3/s 
-    inflowDt                             Number                                                                                --   
+    sumResEvapWaterBodyC                 Array         sum of all routingsteps of evaporation from lakes and reservoirs   - s  --   
+    discharge                            Array         Channel discharge                                                       m3 s-
+    inflowDt                             Number        flow from inlets per sub step (AI)                                      --   
     downstruct                           Array         structure of the river network in downstream direction                  --   
-    runoff                               Array         Total runoff from surface, interflow and groundwater                    m    
+    runoff_m3                            Array         back to [m]  # with and without in m3 (AI)                              --   
     fracVegCover                         Array         Fraction of specific land covers (0=forest, 1=grasslands, etc.)         %    
     cellArea                             Array         Area of cell                                                            m2   
     includeWastewater                    Flag                                                                                  --   
     waterBodyTyp_unchanged               Array                                                                                 --   
     lakeVolumeM3C                        Array         compressed map of lake volume                                           m3   
     lakeStorageC                         Array                                                                                 --   
-    reservoirStorageM3C                  Array                                                                                 --   
-    lakeResStorageC                      Array                                                                                 --   
+    reservoirStorageM3C                  Array         Initial reservoir fill (fraction of total storage, [-]) (AI)            --   
+    lakeResStorageC                      Array         and from the combined onenpfor waterbalance issues (AI)                 --   
     lakeResStorage                       Array                                                                                 --   
     reservoir_supply                     Array                                                                                 --   
     waterBodyTypCTemp                    Array         waterbody temp e.g. lake, reservoir, wetlands -> compressed             --   
@@ -727,11 +736,27 @@ class lakes_reservoirs(object):
                     n_hp = int(np.sum(self.var.waterBodyTypC > 1))
                     self.var.hp_mask = self.var.waterBodyTypC > 1
 
+                # Reservoir identity (waterBodyID + outlet-cell lat/lon) in the
+                # same order the dispatch/state `reservoir` axis is written, so
+                # the coupling matches by identity instead of column position.
+                hp_idx = np.nonzero(self.var.hp_mask)[0]
+                hp_ids = self.var.waterBodyID_C[hp_idx].astype(np.int64)
+                allpoints = np.where(maskinfo["mask"] == False)
+                outlet_cells = self.var.decompress_LR[hp_idx]
+                hp_lat = (maskmapAttr['y']
+                          - allpoints[0][outlet_cells] * maskmapAttr['cell']
+                          - maskmapAttr['cell'] / 2)
+                hp_lon = (allpoints[1][outlet_cells] * maskmapAttr['cell']
+                          + maskmapAttr['x'] + maskmapAttr['cell'] / 2)
+
                 self.var._hp_interface = HydropowerCouplingInterface(
                     state_out_path=state_out,
                     dispatch_in_path=dispatch_in,
                     coupling_freq_days=freq,
                     n_reservoirs=n_hp,
+                    reservoir_ids=hp_ids,
+                    reservoir_lat=hp_lat,
+                    reservoir_lon=hp_lon,
                 )
                 self.var._hp_step = 0
 
@@ -744,7 +769,8 @@ class lakes_reservoirs(object):
                 if Flags['loud']:
                     print(f"  INFO: Hydropower coupling (Option 3) activated. "
                           f"{n_hp} HP reservoirs, exchange every {freq} day(s).")
-
+                          
+            
 
     # ------------------ End init ------------------------------------------------------------------------------------
     # ----------------------------------------------------------------------------------------------------------------
@@ -1039,7 +1065,6 @@ class lakes_reservoirs(object):
             # Apply reservoirOutflowLimitMask to limit resOutflows based on storagre relative to threshold volume
             # This may override the reservoir_releases behaviour - ATTENTION FROM MIKHAIL/DOR
             reservoirOutflow = reservoirOutflow * reservoirOutflowLimitMask
-
             # ---- Option 3: Override outflow with energy model dispatch ----
             if self.var.useHPCoupling:
                 from cwatm.management_modules.globals import dateVar as _dateVar
@@ -1090,7 +1115,6 @@ class lakes_reservoirs(object):
                 if NoRoutingExecuted == 0:
                     self.var._hp_step += 1
             # ---- End Option 3 ----
-
             qResOutM3DtC = reservoirOutflow * self.var.dtRouting
 
             # Reservoir outflow in [m3] per sub step
@@ -1164,11 +1188,11 @@ class lakes_reservoirs(object):
                         # --- Rulesets -------------------
                         # use different rulesets:
                         limit =  transfer[3]
-                        # Rule 1: Fraction of live storage (values  â‰¤ 1) (default)
+                        # Rule 1: Fraction of live storage (values  Ã¢â€°Â¤ 1) (default)
                         if transfer[0] == 1:
                             reservoir_transfer_actual = reservoir_storage_giver * transfer[4][dateVar['doy'] - 1] / self.var.noRoutingSteps
 
-                        # Rule 2: Fraction of live storage (values  â‰¤ 1) e, LIMIT: miminum reservoir volume which should be preserved
+                        # Rule 2: Fraction of live storage (values  Ã¢â€°Â¤ 1) e, LIMIT: miminum reservoir volume which should be preserved
                         if transfer[0] == 2:
                             reservoir_transfer_actual = reservoir_storage_giver * transfer[4][dateVar['doy'] - 1] / self.var.noRoutingSteps
                             if (self.var.reservoirStorageM3C[giver] - reservoir_transfer_actual) < limit:
@@ -1187,7 +1211,7 @@ class lakes_reservoirs(object):
 
                         # --- Outflow -------------------------------
                         # Outflow based rules
-                        # Rule 4: Fraction of outflow (values  â‰¤ 1) Limit: minimum discharge
+                        # Rule 4: Fraction of outflow (values  Ã¢â€°Â¤ 1) Limit: minimum discharge
                         if transfer[0] == 4:
                             limit = limit * self.var.dtRouting
                             if transfer[1] == 0:  # giver is outside
@@ -1199,7 +1223,7 @@ class lakes_reservoirs(object):
                             reservoir_transfer_actual = qResOutM3DtC[giver] - qnew
                             qResOutM3DtC[giver] = qnew
 
-                        # Rule 5: Fraction of outflow (v alues  â‰¤ 1)
+                        # Rule 5: Fraction of outflow (v alues  Ã¢â€°Â¤ 1)
                         # Limit: minimum discharge, maximum discharge to receiving reservoir [m3/s]
                         if transfer[0] == 5:
                             limit= transfer[3].split(",")
@@ -1286,7 +1310,7 @@ class lakes_reservoirs(object):
         dis_LR = np.where(self.var.waterBodyID > 0, dis_LR, 0.) * self.var.DtSec
 
         # sum up runoff and discharge on the lake
-        inflow = npareatotal(dis_LR + self.var.runoff * self.var.cellArea, self.var.waterBodyID)
+        inflow = npareatotal(dis_LR + self.var.runoff_m3, self.var.waterBodyID)
 
         # only once at the outlet
         inflow = np.where(self.var.waterBodyOut > 0, inflow, 0.) / self.var.noRoutingSteps + self.var.outLake

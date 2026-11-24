@@ -15,5 +15,5 @@
         "output/*.nc"
     ],
     "cmdline_args": [],
-    "includes_main_path": "../../../CWatM"
+    "includes_main_path": "../../bin/CWatM"
 }

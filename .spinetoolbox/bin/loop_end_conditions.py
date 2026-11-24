@@ -5,6 +5,7 @@ from datetime import timedelta
 from datetime import datetime
 
 file_path = sys.argv[1]
+
 var = {}
 with open(file_path, 'r') as file:
     for line in file:
@@ -13,6 +14,7 @@ with open(file_path, 'r') as file:
             print(line.strip())
             variables = str_test.split(";")
             var[variables[0]] = variables[1]
+            print(str_test)
         else:
             url = str_test
             print(url)

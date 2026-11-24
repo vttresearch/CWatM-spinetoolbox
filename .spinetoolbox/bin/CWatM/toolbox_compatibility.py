@@ -96,23 +96,26 @@ print('PathOut = ' + outputfolder)
 initfolder = config["INITITIAL CONDITIONS"]["initSave"]
 current_directory = os.getcwd()
 final_directory = os.path.join(current_directory, Path(r"{}".format(outputfolder)))
-final_directory_init = os.path.join(current_directory, Path(r"{}".format(initfolder)))
+initfilename = os.path.join(current_directory, Path(r"{}".format(initfolder)))
+final_directory_init = os.path.dirname(initfilename)
 if not os.path.exists(final_directory):
     print("Creating the directory: " + final_directory)
     os.makedirs(final_directory)
+    print('Creating output folder: ' + final_directory)
 if not os.path.exists(final_directory_init):
     print("Creating the directory: " + final_directory_init)
+    print('Creating initial conditions folder: ' + final_directory_init)
     os.makedirs(final_directory_init)
             # Re-write the path to the dictionnary to be used in the ini file
 #PathOut = .\output_30min4
 
 # Create the output folder as given in the database from the ini file
+print("Initload: " + str(config["INITITIAL CONDITIONS"]["initLoad"]))
 print("outputfolder: " + outputfolder)
 print("initfolder: " + initfolder)
-print('Creating output folder: ' + final_directory)
-print('Creating initial conditions folder: ' + final_directory_init)
+
 replacetext(inifile, 'PathOut = ' + outputfolder, 'PathOut = ' + final_directory)
-replacetext(inifile, 'initSave = ' + initfolder, 'initSave = ' + final_directory_init)
+replacetext(inifile, 'initSave = ' + initfolder, 'initSave = ' + initfilename)
 
 print(sys.argv[1:])
 
@@ -125,7 +128,14 @@ filename = "toolbox_cwatm.log"
 
 #module call
 print(os.getcwd())
-success, last_dis = run_cwatm.main(sys.argv[1],sys.argv[2:])
+try:
+    success, last_dis = run_cwatm.main(sys.argv[1],sys.argv[2:])
+    if not success:
+        print("CWatM run failed.")
+        sys.exit(-1)
+except Exception as e:
+    print(f"An error occurred while running CWatM: {e}")
+    sys.exit(-1)
 
 #f = open(filename,'w')
 #content = "OUTPUT:\n"+str(output)+"\nERRORS:\n"+str(errors)
